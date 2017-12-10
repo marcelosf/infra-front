@@ -72,7 +72,7 @@
           title: 'Inspire'
         }],
         right: true,
-        title: 'Vuetify.js'
+        title: 'IAG Inventory'
       }
     }
   }
