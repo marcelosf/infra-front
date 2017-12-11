@@ -1,23 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
-import Authentication from '@/components/authentication/Authentication'
+
+import {HomeRouters} from '@/components/home/home.route'
+import {AuthenticationRouters} from '@/components/authentication/authentication.route'
+import {UserRouters} from '@/components/user/user.route'
 
 Vue.use(Router)
 
+let routes = []
+
+let registeredRoutes = routes.concat(
+
+  HomeRouters,
+  AuthenticationRouters,
+  UserRouters
+
+)
+
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Hello',
-      component: Hello
-    },
-
-    {
-      path: '/authentication',
-      name: 'Authentication',
-      component: Authentication
-    }
-
-  ]
+  routes: registeredRoutes
 })
