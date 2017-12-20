@@ -8,8 +8,8 @@ module.exports = {
   custom_assertions_path: ['test/e2e/custom-assertions'],
 
   selenium: {
-    start_process: true,
-    server_path: require('selenium-server').path,
+    start_process: false,
+    // server_path: require('selenium-server').path,
     host: '127.0.0.1',
     port: 4444,
     cli_args: {
@@ -20,10 +20,10 @@ module.exports = {
   test_settings: {
     default: {
       selenium_port: 4444,
-      selenium_host: 'localhost',
+      selenium_host: 'selenium',
       silent: true,
       globals: {
-        devServerURL: 'http://localhost:' + (process.env.PORT || config.dev.port)
+        devServerURL: 'http://vue:' + (process.env.PORT || config.dev.port)
       }
     },
 
@@ -31,7 +31,8 @@ module.exports = {
       desiredCapabilities: {
         browserName: 'chrome',
         javascriptEnabled: true,
-        acceptSslCerts: true
+        acceptSslCerts: true,
+        webStorageEnable: true
       }
     },
 
@@ -39,7 +40,8 @@ module.exports = {
       desiredCapabilities: {
         browserName: 'firefox',
         javascriptEnabled: true,
-        acceptSslCerts: true
+        acceptSslCerts: true,
+        webStorageEnable: true
       }
     }
   }

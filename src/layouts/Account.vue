@@ -14,14 +14,14 @@
 
                 <v-text-field
                         label="Login"
-                        v-model="login"
+                        v-model="credentials.code"
                         required
                 ></v-text-field>
 
                 <v-text-field
                         name="account-password"
                         label="Password"
-                        v-model="password"
+                        v-model="credentials.password"
                         type="password"
                         required
                 ></v-text-field>
@@ -30,22 +30,57 @@
 
         </v-card-text>
 
+        <v-card-actions>
+
+            <v-btn flat @click="login()">Login</v-btn>
+
+        </v-card-actions>
+
     </v-card>
 
 </template>
 
 <script>
+    import {Authentication} from '@/resources/Authentication';
+
     export default {
 
       props: ['title'],
 
       data () {
+
         return {
 
-          login: '',
+          credentials: {
 
-          password: ''
+            code: '',
+
+            password: ''
+
+          }
+
         }
+      },
+
+      methods: {
+
+        login () {
+
+          let auth = new Authentication();
+
+          try {
+
+            auth.login(this.credentials);
+
+          } catch (error) {
+
+            this.$emit('error', error.message);
+
+          }
+
+        }
+
       }
+
     }
 </script>

@@ -6,12 +6,19 @@
 
             <v-flex xs6 offset-xs2>
 
-                <account-component title="Account"></account-component>
+                <account-component title="Account" @error="showError"></account-component>
 
             </v-flex>
 
         </v-layout>
 
+        <v-snackbar :timeout="5000" :bottom="true" v-model="snackbar">
+
+            {{ snackbarText }}
+
+            <v-btn flat color="pink" @click.native="snackbar = false">CLOSE</v-btn>
+
+        </v-snackbar>
 
     </v-container>
 
@@ -21,6 +28,30 @@
     import Account from '../../layouts/Account.vue'
 
     export default {
+
+      data () {
+
+        return {
+
+          snackbar: false,
+
+          snackbarText: 'Default'
+
+        }
+
+      },
+
+      methods: {
+
+        showError (message) {
+
+          this.snackbarText = message;
+
+          this.snackbar = true;
+
+        }
+
+      },
 
       components: {
 
