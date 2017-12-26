@@ -10,21 +10,9 @@ export class Jwt {
 
   }
 
-  requestToken (data) {
+  requestToken (data, action, error) {
 
-    try {
-
-      this.api.post(GET_TOKEN_URL, data).then((response) => {
-
-        return response;
-
-      });
-
-    } catch (error) {
-
-      return "Something went's wrong requesting a token. " + error.message + ' ' + error.code
-
-    }
+    this.api.post(GET_TOKEN_URL, data).then(action).catch(error);
 
   }
 

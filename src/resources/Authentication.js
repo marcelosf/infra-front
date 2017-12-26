@@ -1,7 +1,7 @@
 import {Jwt} from './Jwt/Jwt.js';
 import {Api} from './Api/Api';
 import {LocalStorage} from './LocalStorage/LocalStorage';
-import {AuthenticationException} from './AuthenticationException';
+import {LoginInterceptor} from '@/middleware/LoginInterceptor';
 
 const ACCESS_TOKEN_KEY = 'access_token';
 
@@ -9,27 +9,17 @@ export class Authentication {
 
   constructor () {
 
-    let api = new Api().initialize();
+    this._api = new Api().initialize();
 
-    this.JWT = new Jwt(api);
+    LoginInterceptor.handleLoginResponse(this._api);
+
+    this.JWT = new Jwt(this._api);
 
   }
 
-  login (credentials) {
+  login (credentials, error) {
 
-    let response = this.JWT.requestToken(credentials);
-
-    if (response) {
-
-      let localStorage = new LocalStorage();
-
-      localStorage.storeValue(ACCESS_TOKEN_KEY, response.data.access_token);
-
-      return true;
-
-    }
-
-    throw new AuthenticationException('Wrong login or password.');
+    this.JWT.requestToken(credentials, this._storeAccountToken, error);
 
   }
 
@@ -42,6 +32,16 @@ export class Authentication {
   logout () {
 
     this.JWT.removeToken();
+
+  }
+
+  _storeAccountToken (response) {
+
+    let localStorage = new LocalStorage();
+
+    localStorage.storeValue(ACCESS_TOKEN_KEY, response.data.access_token);
+
+    return true;
 
   }
 

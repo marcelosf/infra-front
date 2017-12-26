@@ -68,15 +68,11 @@
 
           let auth = new Authentication();
 
-          try {
+          auth.login(this.credentials, (error) => {
 
-            auth.login(this.credentials);
+            this.$emit('error', error.response.data.message);
 
-          } catch (error) {
-
-            this.$emit('error', error.message);
-
-          }
+          });
 
         }
 
