@@ -42,6 +42,8 @@
 
       <v-spacer></v-spacer>
 
+      <account-menu :user="user"></account-menu>
+
     </v-toolbar>
 
     <v-content>
@@ -61,19 +63,42 @@
 </template>
 
 <script>
+  import AccountMenu from '@/layouts/AccountMenu.vue';
+
   export default {
+
     data () {
+
       return {
+
         clipped: true,
+
         drawer: true,
+
         fixed: true,
+
         items: [{
+
           icon: 'bubble_chart',
+
           title: 'Inspire'
+
         }],
+
         right: true,
-        title: 'IAG Inventory'
+
+        title: 'IAG Inventory',
+
+        user: {name: 'Test'}
+
       }
+
+    },
+
+    components: {
+
+      'account-menu': AccountMenu
+
     }
   }
 </script>

@@ -28,10 +28,4 @@ export class LoginInterceptor extends Middleware {
 
   }
 
-  static handleLoginHeaderAuthorization (api, token) {
-
-    api.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-
-  }
-
 }

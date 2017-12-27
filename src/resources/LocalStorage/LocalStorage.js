@@ -22,7 +22,7 @@ export class LocalStorage {
 
   }
 
-  destroyToken (key) {
+  destroy (key) {
 
     try {
 
