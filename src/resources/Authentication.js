@@ -17,9 +17,15 @@ export class Authentication {
 
   }
 
-  login (credentials, error) {
+  login (credentials, triggerLoginActions, error) {
 
-    this.JWT.requestToken(credentials, this._storeAccountToken, error);
+    this.JWT.requestToken(credentials, (response) => {
+
+      this._storeAccountToken(response);
+
+      triggerLoginActions();
+
+    }, error);
 
   }
 
@@ -31,15 +37,25 @@ export class Authentication {
 
   logout () {
 
-    this.JWT.removeToken();
+    if (this.check()) {
+
+      // TODO Invalidate Token.
+
+      LocalStorage.destroy(ACCESS_TOKEN_KEY);
+
+    }
+
+  }
+
+  check () {
+
+    return LocalStorage.getValueByKey(ACCESS_TOKEN_KEY) !== null;
 
   }
 
   _storeAccountToken (response) {
 
-    let localStorage = new LocalStorage();
-
-    localStorage.storeValue(ACCESS_TOKEN_KEY, response.data.access_token);
+    LocalStorage.storeValue(ACCESS_TOKEN_KEY, response.data.access_token);
 
     return true;
 

@@ -42,6 +42,7 @@
 
 <script>
     import {Authentication} from '@/resources/Authentication';
+    import {User} from '@/resources/User';
 
     export default {
 
@@ -66,13 +67,39 @@
 
         login () {
 
-          let auth = new Authentication();
+          this._getAuthHandler().login(this.credentials, this._triggerLoginActions, this._triggerLoginError);
 
-          auth.login(this.credentials, (error) => {
+        },
 
-            this.$emit('error', error.response.data.message);
+        _getAuthHandler () {
+
+          return new Authentication();
+
+        },
+
+        _triggerLoginActions () {
+
+          this._getUserHandler().loadUserData(() => {
+
+            this.$store.state.user.user = this._getUserHandler().getUser();
+
+          }, (error) => {
+
+            this.$emit('error', error.response.message);
 
           });
+
+        },
+
+        _getUserHandler () {
+
+          return User;
+
+        },
+
+        _triggerLoginError (error) {
+
+          this.$emit('error', error.response.data.message);
 
         }
 

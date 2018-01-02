@@ -12,7 +12,7 @@ export class Jwt {
 
   requestToken (data, action, error) {
 
-    this.api.post(GET_TOKEN_URL, data).then(action).catch(error);
+    return this.api.post(GET_TOKEN_URL, data).then(action).catch(error);
 
   }
 

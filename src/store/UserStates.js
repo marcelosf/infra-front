@@ -1,5 +1,7 @@
 export const UserStates = {
 
+  namespaced: true,
+
   state: {
 
     user: {}
@@ -18,7 +20,7 @@ export const UserStates = {
 
   getters: {
 
-    userName (state) {
+    username (state) {
 
       return state.user.filter(user => user.name);
 

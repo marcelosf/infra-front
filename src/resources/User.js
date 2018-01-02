@@ -7,29 +7,33 @@ import {TokenInterceptor} from '@/middleware/TokenInterceptor';
 
 export class User {
 
-  static loadUserData (error) {
+  static getUser () {
+
+    let userData = this._getStorageHandler().getValueByKey(STORAGE_USER_KEY);
+
+    return JSON.parse(userData);
+
+  }
+
+  static loadUserData (afterLoadActions, error) {
 
     this._setUserAccessToken();
 
-    this._setUserRequester(this._accessToken);
+    this._setUserRequester();
 
     this._api.post(USER_ROUTE).then((response) => {
 
-      this._storeUser(response.data.user);
+      this._storeUser(JSON.stringify(response.data));
 
-      return response.data.user;
+      afterLoadActions();
+
+      return response.data;
 
     }).catch(error);
 
   }
 
-  static getUser () {
-
-    return this._getStorageHandler().getValueByKey(STORAGE_USER_KEY);
-
-  }
-
-  static clearSession() {
+  static clearSession () {
 
     this._getStorageHandler().destroy(STORAGE_USER_KEY);
 
@@ -41,11 +45,9 @@ export class User {
 
   }
 
-  static _setUserRequester (accessToken) {
+  static _setUserRequester () {
 
-    let api = new Api().initialize();
-
-    this._api = TokenInterceptor.handleBearer(api, accessToken);
+    this._api = TokenInterceptor.handleBearer(this._getApi(), this._accessToken);
 
   }
 
@@ -55,9 +57,15 @@ export class User {
 
   }
 
-  static _getStorageHandler() {
+  static _getStorageHandler () {
 
-    return new LocalStorage();
+    return LocalStorage;
+
+  }
+
+  static _getApi () {
+
+    return new Api().initialize();
 
   }
 

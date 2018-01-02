@@ -1,12 +1,12 @@
 export class LocalStorage {
 
-  getValueByKey (key) {
+  static getValueByKey (key) {
 
-    return this.localStorage.getItem(key);
+    return localStorage.getItem(key);
 
   }
 
-  storeValue (key, value) {
+  static storeValue (key, value) {
 
     try {
 
@@ -22,7 +22,7 @@ export class LocalStorage {
 
   }
 
-  destroy (key) {
+  static destroy (key) {
 
     try {
 

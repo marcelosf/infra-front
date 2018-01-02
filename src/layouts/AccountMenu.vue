@@ -2,7 +2,7 @@
 
     <div>
 
-        {{ user.name }}
+        {{ userMenu.name }}
 
         <v-btn icon>
 
@@ -18,7 +18,15 @@
 
 export default {
 
-  props: ['user']
+  computed: {
+
+    userMenu () {
+
+      return this.$store.state.user.user;
+
+    }
+
+  }
 
 }
 

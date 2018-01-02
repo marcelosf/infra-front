@@ -42,7 +42,7 @@
 
       <v-spacer></v-spacer>
 
-      <account-menu :user="user"></account-menu>
+      <account-menu></account-menu>
 
     </v-toolbar>
 
@@ -87,9 +87,7 @@
 
         right: true,
 
-        title: 'IAG Inventory',
-
-        user: {name: 'Test'}
+        title: 'IAG Inventory'
 
       }
 
