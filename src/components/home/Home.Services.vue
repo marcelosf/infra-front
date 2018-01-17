@@ -1,13 +1,56 @@
 <template>
 
-    <div>
+    <v-container fluid>
 
-        <div class="layout-padding">
+        <v-layout row wrap>
 
-            <h4>Commissões</h4>
+            <h2>Serviços</h2>
 
-        </div>
+        </v-layout>
 
-    </div>
+        <services-grid :cards="services"></services-grid>
+
+    </v-container>
 
 </template>
+
+<script>
+    import CardGrid from '@/layouts/CardGrid';
+    export default {
+
+      data () {
+
+        return {
+
+          services: [
+
+            {title: 'Audiovisual', media: '', link: ''},
+            {title: 'Copa', media: '', link: ''},
+            {title: 'LIme', media: '', link: ''},
+            {
+              title: 'Manutenção',
+              media: 'https://cdn.evbuc.com/eventlogos/110429189/facilitiesmanagement2.jpg',
+              link: 'maintenence.index',
+              add: 'maintenence.new',
+              list: 'maintenence.index'
+            },
+            {title: 'Patrimônio', media: '', link: ''},
+            {title: 'Plotagem', media: '', link: ''},
+            {title: 'Transporte', media: '', link: ''},
+            {title: 'Acesso', media: '', link: ''},
+            {title: 'Chaves', media: '', link: ''}
+          ]
+
+        }
+
+      },
+
+      components: {
+
+        'services-grid': CardGrid
+
+      }
+
+    }
+
+</script>
