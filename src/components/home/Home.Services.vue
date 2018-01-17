@@ -30,9 +30,9 @@
             {
               title: 'Manutenção',
               media: 'https://cdn.evbuc.com/eventlogos/110429189/facilitiesmanagement2.jpg',
-              link: 'maintenence.index',
-              add: 'maintenence.new',
-              list: 'maintenence.index'
+              link: 'maintenance.index',
+              add: 'maintenance.service.create',
+              list: 'maintenance.index'
             },
             {title: 'Patrimônio', media: '', link: ''},
             {title: 'Plotagem', media: '', link: ''},

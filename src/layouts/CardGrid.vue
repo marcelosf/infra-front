@@ -40,10 +40,6 @@
 
     </v-container>
 
-
-
-
-
 </template>
 
 <script>
