@@ -4,7 +4,7 @@ export const AuthenticationRouters = [
 
   {
     path: '/authentication',
-    name: 'Authentication',
+    name: 'authentication',
     component: Authentication
   }
 

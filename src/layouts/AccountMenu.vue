@@ -4,9 +4,9 @@
 
         {{ userMenu.name }}
 
-        <v-btn icon>
+        <v-btn :to="{ name: 'authentication' }" icon>
 
-            <v-icon>account_circle</v-icon>
+            <v-icon class="white--text">account_circle</v-icon>
 
         </v-btn>
 

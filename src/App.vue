@@ -10,7 +10,25 @@
 
       <v-list>
 
-        <v-list-tile ripple v-model="activatedItem" v-for="item in items" :key="item.id" :to="{ name: item.link }">
+        <v-list-tile ripple :to="{ name: 'home'}"  v-model="activeItem">
+
+          <v-list-tile-action>
+
+            <v-icon>home</v-icon>
+
+          </v-list-tile-action>
+
+          <v-list-tile-content>
+
+            <v-list-tile-title>Home</v-list-tile-title>
+
+          </v-list-tile-content>
+
+        </v-list-tile>
+
+        <v-divider></v-divider>
+
+        <v-list-tile ripple v-model="activeItem" v-for="item in items" :key="item.id" :to="{ name: item.link }">
 
           <v-list-tile-action>
 
@@ -30,9 +48,9 @@
 
     </v-navigation-drawer>
 
-    <v-toolbar fixed app :clipped-left="clipped">
+    <v-toolbar class="light-blue white--text" fixed app :clipped-left="clipped">
 
-      <v-toolbar-side-icon @click.stop="drawer = !drawer" light></v-toolbar-side-icon>
+      <v-toolbar-side-icon class="white--text" @click.stop="drawer = !drawer" light></v-toolbar-side-icon>
 
       <v-toolbar-title v-text="title"></v-toolbar-title>
 
@@ -44,7 +62,11 @@
 
     <v-content>
 
-      <router-view></router-view>
+      <transition name="fade" mode="out-in">
+
+        <router-view></router-view>
+
+      </transition>
 
     </v-content>
 
@@ -57,6 +79,22 @@
   </v-app>
 
 </template>
+
+<style>
+
+  .fade-enter-active, .fade-leave-active {
+
+    transition: opacity .5s;
+
+  }
+
+  .fade-enter, .fade-leave-to {
+
+    opacity: 0;
+
+  }
+
+</style>
 
 <script>
   import AccountMenu from '@/layouts/AccountMenu.vue';
@@ -73,7 +111,7 @@
 
         fixed: true,
 
-        activatedItem: false,
+        activeItem: false,
 
         items: [
 
