@@ -4,7 +4,7 @@
 
         <v-layout row wrap>
 
-            <v-flex xs6 offset-xs2>
+            <v-flex xs12 sm6 md6 offset-sm2 offset-md2>
 
                 <account-component title="Account" @error="showError"></account-component>
 
