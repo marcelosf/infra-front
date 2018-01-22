@@ -2,15 +2,9 @@
 
     <v-container fluid>
 
-       <workspace-card title="Serviços">
+       <h1>Serviços</h1>
 
-           <span slot="menu">
-
-           </span>
-
-           <services-grid :cards="services"></services-grid>
-
-       </workspace-card>
+       <services-grid :cards="services"></services-grid>
 
     </v-container>
 
@@ -34,9 +28,9 @@
             {
               title: 'Manutenção',
               media: 'https://cdn.evbuc.com/eventlogos/110429189/facilitiesmanagement2.jpg',
-              link: 'maintenance.index',
+              link: 'maintenance.service',
               add: 'maintenance.service.create',
-              list: 'maintenance.index'
+              list: 'maintenance.service'
             },
             {title: 'Patrimônio', media: '', link: ''},
             {title: 'Plotagem', media: '', link: ''},

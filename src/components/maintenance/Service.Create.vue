@@ -6,7 +6,7 @@
 
             <span slot="menu">
 
-                <v-btn icon>
+                <v-btn icon :to="{name: 'maintenance.service'}">
 
                     <v-icon>list</v-icon>
 
@@ -14,27 +14,35 @@
 
             </span>
 
-            <v-select
-                    label="Responsavel"
-                    v-bind:items="userItems"
-                    v-model="service.answerable"
-                    item-value="id"
-                    item-text="name"
-                    max-height="400"
-                    hint="Informe o responsável pelo serviço"
-                    persistent-hint
-            ></v-select>
+            <v-form v-model="rules.valid">
 
-            <locale-selector @update="updateLocaleData"></locale-selector>
+                <v-select
+                        label="Responsavel"
+                        v-bind:items="userItems"
+                        v-model="service.answerable_id"
+                        :rules="rules.answerable_id"
+                        item-value="id"
+                        item-text="name"
+                        max-height="400"
+                        hint="Informe o responsável pelo serviço"
+                        persistent-hint
+                        required
+                ></v-select>
 
-            <v-text-field
-                    label="Descrição"
-                    name="description"
-                    v-model="service.description"
-                    multi-line
-            ></v-text-field>
+                <locale-selector @update="updateLocaleData"></locale-selector>
 
-            <v-btn color="primary" @click="store">Enviar</v-btn>
+                <v-text-field
+                        label="Descrição"
+                        name="description"
+                        v-model="service.description"
+                        :rules="rules.description"
+                        multi-line
+                        required
+                ></v-text-field>
+
+                <v-btn color="primary" :disabled="!rules.valid" @click="store">Enviar</v-btn>
+
+            </v-form>
 
         </workspace-card>
 
@@ -74,6 +82,8 @@
         return {
 
           service: Service.service,
+
+          rules: Service.rules,
 
           userItems: [],
 
@@ -134,6 +144,14 @@
           this.snackbarMessage = message;
 
           this.snackbar = true;
+
+        },
+
+        answerableRequired () {
+
+          let answerable = this.service.answerable_id;
+
+          return (answerable && answerable.length > 0) || 'Please, select an option';
 
         }
 

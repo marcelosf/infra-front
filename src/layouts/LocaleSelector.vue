@@ -1,54 +1,66 @@
 <template>
 
-    <v-container grid-list-lg>
+    <v-form v-model="valid">
 
-        <v-layout row wrap>
+        <v-container grid-list-lg>
 
-            <v-flex xs12 sm4 md4 lg4>
+            <v-layout row wrap>
 
-                <v-select
-                        label="Bloco"
-                        v-bind:items="locales"
-                        item-text="build"
-                        item-value="id"
-                        v-model="build"
-                        persistent-hint
-                        autocomplete
-                ></v-select>
+                <v-flex xs12 sm4 md4 lg4>
 
-            </v-flex>
+                    <v-select
+                            label="Bloco"
+                            v-bind:items="locales"
+                            :rules="buildRule"
+                            item-text="build"
+                            item-value="id"
+                            v-model="build"
+                            persistent-hint
+                            autocomplete
+                            required
+                    ></v-select>
 
-            <v-flex xs12 sm4 md4 lg4>
+                </v-flex>
 
-                <v-select
-                        label="Andar"
-                        v-bind:items="floorItems"
-                        item-text="floor"
-                        item-value="id"
-                        v-model="floor"
-                        persistent-hint
-                        autocomplete
-                ></v-select>
+                <v-flex xs12 sm4 md4 lg4>
 
-            </v-flex>
+                    <v-select
+                            label="Andar"
+                            v-bind:items="floorItems"
+                            :rules="floorRule"
+                            item-text="floor"
+                            item-value="id"
+                            v-model="floor"
+                            persistent-hint
+                            autocomplete
+                            required
+                    ></v-select>
 
-            <v-flex xs12 sm4 md4 lg4>
+                </v-flex>
 
-                <v-select
-                        label="Sala"
-                        v-bind:items="localeItems"
-                        item-text="name"
-                        item-value="id"
-                        v-model="room"
-                        persistent-hint
-                        autocomplete
-                ></v-select>
+                <v-flex xs12 sm4 md4 lg4>
 
-            </v-flex>
+                    <v-select
+                            label="Sala"
+                            v-bind:items="localeItems"
+                            :rules="roomRule"
+                            item-text="name"
+                            item-value="id"
+                            v-model="room"
+                            persistent-hint
+                            autocomplete
+                            required
+                    ></v-select>
 
-        </v-layout>
+                </v-flex>
 
-    </v-container>
+            </v-layout>
+
+        </v-container>
+
+
+    </v-form>
+
 
 </template>
 
@@ -76,9 +88,17 @@
 
         build: '',
 
+        buildRule: [(value) => !!value || 'Please, select an option.'],
+
         floor: '',
 
-        room: ''
+        floorRule: [(value) => !!value || 'Please, select an option.'],
+
+        room: '',
+
+        roomRule: [(value) => !!value || 'Please, select an option.'],
+
+        valid: false
 
       }
 
@@ -128,7 +148,7 @@
 
       dispatchUpdateEvent () {
 
-        this.$emit('update', {build: this.build, floor: this.floor, room: this.room});
+        this.$emit('update', {build: this.build, floor: this.floor, room: this.room, valid: this.valid});
 
       }
 
