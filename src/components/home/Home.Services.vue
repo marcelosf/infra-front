@@ -2,20 +2,24 @@
 
     <v-container fluid>
 
-        <v-layout row wrap>
+       <workspace-card title="Serviços">
 
-            <h2>Serviços</h2>
+           <span slot="menu">
 
-        </v-layout>
+           </span>
 
-        <services-grid :cards="services"></services-grid>
+           <services-grid :cards="services"></services-grid>
+
+       </workspace-card>
 
     </v-container>
 
 </template>
 
 <script>
+    import WorkspaceCard from '@/layouts/WorkspaceCard';
     import CardGrid from '@/layouts/CardGrid';
+
     export default {
 
       data () {
@@ -47,6 +51,7 @@
 
       components: {
 
+        'workspace-card': WorkspaceCard,
         'services-grid': CardGrid
 
       }

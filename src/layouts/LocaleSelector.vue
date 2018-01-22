@@ -12,7 +12,6 @@
                         item-text="build"
                         item-value="id"
                         v-model="build"
-                        hint="Informe o local onde será executado o serviço"
                         persistent-hint
                         autocomplete
                 ></v-select>
@@ -27,7 +26,6 @@
                         item-text="floor"
                         item-value="id"
                         v-model="floor"
-                        hint="Informe o local onde será executado o serviço"
                         persistent-hint
                         autocomplete
                 ></v-select>
@@ -42,7 +40,6 @@
                         item-text="name"
                         item-value="id"
                         v-model="room"
-                        hint="Informe o local onde será executado o serviço"
                         persistent-hint
                         autocomplete
                 ></v-select>

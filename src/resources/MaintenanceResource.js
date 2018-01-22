@@ -1,6 +1,6 @@
 import {Resource} from '@/resources/Resource';
 
-const CREATE_SERVICE_URL = 'maintenance/service/store';
+const CREATE_SERVICE_URL = 'maintenance/service/service';
 
 export class MaintenanceResource extends Resource {
 

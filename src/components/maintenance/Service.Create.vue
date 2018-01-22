@@ -16,25 +16,21 @@
 
             <v-select
                     label="Responsavel"
+                    v-bind:items="userItems"
+                    v-model="service.answerable"
+                    item-value="id"
+                    item-text="name"
                     max-height="400"
                     hint="Informe o responsável pelo serviço"
                     persistent-hint
             ></v-select>
 
-            <v-select
-                    label="Serviço"
-                    max-height="400"
-                    hint="Informe o tipo de serviço"
-                    persistent-hint
-                    multiple
-                    chips
-            ></v-select>
-
             <locale-selector @update="updateLocaleData"></locale-selector>
 
             <v-text-field
-                    label="Observações"
-                    name="observation"
+                    label="Descrição"
+                    name="description"
+                    v-model="service.description"
                     multi-line
             ></v-text-field>
 
@@ -44,7 +40,7 @@
 
         <v-snackbar :timeout="5000" :bottom="true" v-model="snackbar">
 
-            {{ snackbarText }}
+            {{ snackbarMessage }}
 
             <v-btn flat color="pink" @click.native="snackbar = false">CLOSE</v-btn>
 
@@ -60,17 +56,16 @@
     import WorkspaceCard from '@/layouts/WorkspaceCard';
     import LocaleSelector from '@/layouts/LocaleSelector';
     import {Locales} from '@/resources/Locales';
+    import {UserResource} from '@/resources/UserResource';
     import {MaintenanceResource} from '@/resources/MaintenanceResource';
+    import Service from './Entities/Service';
+    import {User} from '@/resources/User';
 
     export default {
 
       created () {
 
-        Locales.list((items) => {
-
-          this.locales = items;
-
-        });
+        this.initialize();
 
       },
 
@@ -78,15 +73,9 @@
 
         return {
 
-          service: {
+          service: Service.service,
 
-            build: '',
-
-            floor: '',
-
-            room: ''
-
-          },
+          userItems: [],
 
           snackbar: false,
 
@@ -98,13 +87,31 @@
 
       methods: {
 
+        initialize () {
+
+          Locales.list((items) => {
+
+            this.locales = items;
+
+          });
+
+          UserResource.list((users) => {
+
+            this.userItems = users.data;
+
+          }, (error) => {
+
+            this.showMessage(error);
+
+          });
+
+          this.service.requester_id = User.getUser().id;
+
+        },
+
         updateLocaleData (data) {
 
-          this.service.build = data.build;
-
-          this.service.floor = data.floor;
-
-          this.service.room = data.room;
+          this.service.local_id = data.room;
 
         },
 
@@ -112,13 +119,11 @@
 
           MaintenanceResource.storeService(this.service, (response) => {
 
-            console.log(response);
-
             this.showMessage('Serviço criado com sucesso');
 
-          }, (error) => {
+          }, () => {
 
-            console.log(error);
+            this.showMessage('An Error occurred and we can not to complete your service order');
 
           });
 
@@ -126,7 +131,7 @@
 
         showMessage (message) {
 
-          this.snackbarText = message;
+          this.snackbarMessage = message;
 
           this.snackbar = true;
 

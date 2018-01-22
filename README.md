@@ -1,4 +1,4 @@
-# inventory
+# intranet
 
 > A Vue.js project
 
