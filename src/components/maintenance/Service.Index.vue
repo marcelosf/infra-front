@@ -2,17 +2,52 @@
 
     <v-container fluid>
 
-        <workspace-card title="Serviços">
+        <workspace-card title="Services">
 
             <span slot="menu">
 
-                <v-btn icon :to="{name: 'maintenance.service.create'}">
+                <v-btn class="hidden-sm-and-down primary" icon :to="{name: 'maintenance.service.create'}">
 
                     <v-icon>add</v-icon>
 
                 </v-btn>
 
             </span>
+
+            <v-layout row>
+
+                <v-flex xs12 sm6 offset-sm6>
+
+                    <v-text-field
+                            append-icon="search"
+                            label="Search"
+                            single-line
+                            hide-details
+                            v-model="search"
+                    ></v-text-field>
+
+                </v-flex>
+
+            </v-layout>
+
+            <v-btn class="hidden-sm-and-up primary" fab fixed bottom right :to="{name: 'maintenance.service.create'}">
+
+                <v-icon>add</v-icon>
+
+            </v-btn>
+
+            <v-data-table v-bind:headers="headers" v-bind:items="items" v-bind:search="search">
+
+                <template slot="items" slot-scope="props">
+
+                    <td class="text-xs-left">{{ props.item.code }}</td>
+                    <td class="text-xs-left">{{ props.item.created_at }}</td>
+                    <td class="text-xs-left">{{ props.item.requester }}</td>
+                    <td class="text-xs-left">{{ props.item.status }}</td>
+
+                </template>
+
+            </v-data-table>
 
         </workspace-card>
 
@@ -22,7 +57,45 @@
 
 <script>
   import WorkspaceCard from '@/layouts/WorkspaceCard';
+  import {MaintenanceResource} from '@/resources/MaintenanceResource';
+
   export default {
+
+    created () {
+
+      MaintenanceResource.listServices((services) => {
+
+        console.log(services);
+
+        this.items = services;
+
+      }, (errors) => {
+
+        console.log(errors);
+
+      })
+
+    },
+
+    data () {
+
+      return {
+
+        search: '',
+
+        headers: [
+          {text: 'Code', value: 'code', align: 'left'},
+          {text: 'Created', value: 'created_at', align: 'left'},
+          {text: 'Requester', value: 'requester_id', align: 'left'},
+          {text: 'Status', value: 'status', align: 'left'}
+
+        ],
+
+        items: []
+
+      }
+
+    },
 
     components: {
 
