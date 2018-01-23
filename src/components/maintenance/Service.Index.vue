@@ -6,7 +6,7 @@
 
             <span slot="menu">
 
-                <v-btn class="hidden-sm-and-down primary" icon :to="{name: 'maintenance.service.create'}">
+                <v-btn class="hidden-xs-only primary" icon :to="{name: 'maintenance.service.create'}">
 
                     <v-icon>add</v-icon>
 
@@ -40,10 +40,18 @@
 
                 <template slot="items" slot-scope="props">
 
-                    <td class="text-xs-left">{{ props.item.code }}</td>
-                    <td class="text-xs-left">{{ props.item.created_at }}</td>
-                    <td class="text-xs-left">{{ props.item.requester }}</td>
-                    <td class="text-xs-left">{{ props.item.status }}</td>
+                    <tr>
+
+                        <td class="text-xs-left">{{ props.item.code }}</td>
+                        <td class="text-xs-left">{{ props.item.created_at }}</td>
+                        <td class="text-xs-left">{{ props.item.requester }}</td>
+                        <td class="text-xs-left">{{ props.item.status }}</td>
+                        <td>
+                            <v-btn icon :to="{name: 'maintenance.service.show', params: {service: props.item.id}}">
+                                <v-icon>more_vert</v-icon>
+                            </v-btn>
+                        </td>
+                    </tr>
 
                 </template>
 
@@ -87,7 +95,8 @@
           {text: 'Code', value: 'code', align: 'left'},
           {text: 'Created', value: 'created_at', align: 'left'},
           {text: 'Requester', value: 'requester_id', align: 'left'},
-          {text: 'Status', value: 'status', align: 'left'}
+          {text: 'Status', value: 'status', align: 'left'},
+          {text: 'Actions', align: 'left'}
 
         ],
 

@@ -1,5 +1,6 @@
 import ServiceCreate from '@/components/maintenance/Service.Create';
 import ServiceIndex from '@/components/maintenance/Service.Index';
+import ServiceShow from '@/components/maintenance/Service.Show';
 
 export const MaintenanceRoutes = [
 
@@ -16,6 +17,14 @@ export const MaintenanceRoutes = [
     path: 'maintenance/service',
     name: 'maintenance.service',
     component: ServiceIndex
+
+  },
+
+  {
+
+    path: 'maintenance/service/show/:service',
+    name: 'maintenance.service.show',
+    component: ServiceShow
 
   }
 

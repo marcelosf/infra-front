@@ -6,7 +6,7 @@
 
             <span slot="menu">
 
-                <v-btn icon :to="{name: 'maintenance.service'}">
+                <v-btn icon class="primary" :to="{name: 'maintenance.service'}">
 
                     <v-icon>list</v-icon>
 
