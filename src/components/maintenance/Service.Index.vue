@@ -74,8 +74,6 @@
 
       MaintenanceResource.listServices((services) => {
 
-        console.log(services);
-
         this.items = services;
 
       }, (errors) => {
