@@ -6,9 +6,10 @@
 
             <span slot="menu">
 
-                <v-btn class="hidden-xs-only primary" icon :to="{name: 'maintenance.service.create'}">
+                <v-btn flat class="hidden-xs-only" :to="{name: 'maintenance.service.create'}">
 
                     <v-icon>add</v-icon>
+                    New
 
                 </v-btn>
 
@@ -47,7 +48,7 @@
                         <td class="text-xs-left">{{ props.item.requester }}</td>
                         <td class="text-xs-left">{{ props.item.status }}</td>
                         <td>
-                            <v-btn icon :to="{name: 'maintenance.service.show', params: {service: props.item.id}}">
+                            <v-btn icon @click="triggerActions(props.item)">
                                 <v-icon>more_vert</v-icon>
                             </v-btn>
                         </td>
@@ -96,11 +97,29 @@
           {text: 'Created', value: 'created_at', align: 'left'},
           {text: 'Requester', value: 'requester_id', align: 'left'},
           {text: 'Status', value: 'status', align: 'left'},
-          {text: 'Actions', align: 'left'}
+          {text: 'Actions', value: null, align: 'left'}
 
         ],
 
         items: []
+
+      }
+
+    },
+
+    methods: {
+
+      triggerActions (item) {
+
+        this.$store.state.service.service = item;
+
+        this.$router.push({
+
+          name: 'maintenance.service.show',
+
+          params: { service: item.id }
+
+        });
 
       }
 
