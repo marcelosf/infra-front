@@ -44,7 +44,12 @@
 
                         <blockquote class="blockquote">
 
-                            <v-select></v-select>
+                            <v-select
+                                    v-bind:items="statusOptions"
+                                    v-model="status"
+                                    @change="storeService"
+                            >
+                            </v-select>
 
                         </blockquote>
 
@@ -64,8 +69,30 @@
   import WorkspaceCard from '@/layouts/WorkspaceCard';
   import ServiceRequester from './Service.Requester';
   import ServiceAnswerable from './Service.Answerable';
+  import {MaintenanceResource} from '@/resources/MaintenanceResource';
 
   export default {
+
+    data () {
+
+      return {
+
+        statusOptions: [
+
+            {value: 'waiting_authorization', text: 'Waiting for Authorization'},
+            {value: 'authorized', text: 'Authorized'},
+            {value: 'in_progress', text: 'In Progress'},
+            {value: 'elaborating', text: 'Elaborating'},
+            {value: 'executed', text: 'Executed'},
+            {value: 'canceled', text: 'Canceled'},
+            {value: 'waiting_information', text: 'Waiting for information'},
+            {value: 'waiting_gear', text: 'Waiting for Gear'}
+
+          ]
+
+      }
+
+    },
 
     computed: {
 
@@ -78,6 +105,44 @@
       service () {
 
         return this.$store.state.service.service;
+
+      },
+
+      status: {
+
+        get () {
+
+          return this.$store.state.service.service.status;
+
+        },
+
+        set (status) {
+
+          this.$store.state.service.service.status = status;
+
+        }
+
+      }
+
+    },
+
+    methods: {
+
+      storeService () {
+
+        console.log(this.$store.state.service.service);
+
+        let service = this.$store.state.service.service;
+
+        MaintenanceResource.updateService(service, (response) => {
+
+          console.log(response);
+
+        }, (errors) => {
+
+          console.log(errors);
+
+        });
 
       }
 
