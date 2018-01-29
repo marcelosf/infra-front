@@ -44,11 +44,8 @@
 
                         <blockquote class="blockquote">
 
-                            <v-select
-                                    v-bind:items="statusOptions"
-                                    v-model="status"
-                                    @change="storeService"
-                            >
+                            <v-select v-bind:items="statusOptions" v-model="status">
+
                             </v-select>
 
                         </blockquote>
@@ -120,6 +117,8 @@
 
           this.$store.state.service.service.status = status;
 
+          this._storeService(this.$store.state.service.service);
+
         }
 
       }
@@ -128,15 +127,11 @@
 
     methods: {
 
-      storeService () {
+      _storeService (service) {
 
-        console.log(this.$store.state.service.service);
-
-        let service = this.$store.state.service.service;
+        console.log(service);
 
         MaintenanceResource.updateService(service, (response) => {
-
-          console.log(response);
 
         }, (errors) => {
 
