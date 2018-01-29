@@ -150,15 +150,21 @@
 
           console.log(response);
 
-          this.snackbar.message = response.message;
-
-          this.snackbar.toggle = true;
+          this._sendMessage(response.message);
 
         }, (errors) => {
 
           this.snackbar.message = errors.message;
 
         });
+
+      },
+
+      _sendMessage (message) {
+
+        this.snackbar.message = message;
+
+        this.snackbar.toggle = true;
 
       }
 
