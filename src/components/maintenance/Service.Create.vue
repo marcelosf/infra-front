@@ -47,11 +47,11 @@
 
         </workspace-card>
 
-        <v-snackbar :timeout="5000" :bottom="true" v-model="snackbar">
+        <v-snackbar :timeout="snackbar.timeout" :bottom="true" v-model="snackbar.toggle">
 
-            {{ snackbarMessage }}
+            {{ snackbar.message }}
 
-            <v-btn flat color="pink" @click.native="snackbar = false">CLOSE</v-btn>
+            <v-btn flat color="pink" @click.native="snackbar.toggle = false">CLOSE</v-btn>
 
         </v-snackbar>
 
@@ -88,9 +88,15 @@
 
           userItems: [],
 
-          snackbar: false,
+          snackbar: {
 
-          snackbarMessage: ''
+            toggle: false,
+
+            message: '',
+
+            timeout: process.env.SNACKBAR_TIMEOUT
+
+          }
 
         }
 
@@ -142,9 +148,9 @@
 
         showMessage (message) {
 
-          this.snackbarMessage = message;
+          this.snackbar.message = message;
 
-          this.snackbar = true;
+          this.snackbar.toggle = true;
 
         },
 

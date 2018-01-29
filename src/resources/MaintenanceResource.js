@@ -26,7 +26,7 @@ export class MaintenanceResource extends Resource {
 
     this._getApi().put((UPDATE_SERVICES_URL + data.id), data).then((response) => {
 
-      action(response.data.data);
+      action(response.data);
 
     }).catch(errors);
 

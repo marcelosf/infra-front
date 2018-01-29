@@ -54,6 +54,14 @@
 
                 </v-card>
 
+                <v-snackbar :timeout="snackbar.timeout" :bottom="true" v-model="snackbar.toggle">
+
+                    {{ snackbar.message }}
+
+                    <v-btn flat color="pink" @click.native="snackbar.toggle = false">CLOSE</v-btn>
+
+                </v-snackbar>
+
             </v-flex>
 
         </v-layout>
@@ -85,10 +93,19 @@
             {value: 'waiting_information', text: 'Waiting for information'},
             {value: 'waiting_gear', text: 'Waiting for Gear'}
 
-          ]
+          ],
+
+        snackbar: {
+
+          timeout: process.env.SNACKBAR_TIMEOUT,
+
+          message: '',
+
+          toggle: false
+
+        }
 
       }
-
     },
 
     computed: {
@@ -129,13 +146,17 @@
 
       _storeService (service) {
 
-        console.log(service);
-
         MaintenanceResource.updateService(service, (response) => {
+
+          console.log(response);
+
+          this.snackbar.message = response.message;
+
+          this.snackbar.toggle = true;
 
         }, (errors) => {
 
-          console.log(errors);
+          this.snackbar.message = errors.message;
 
         });
 

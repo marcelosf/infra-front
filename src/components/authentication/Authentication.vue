@@ -12,11 +12,11 @@
 
         </v-layout>
 
-        <v-snackbar :timeout="5000" :bottom="true" v-model="snackbar">
+        <v-snackbar :timeout="snackbar.timeout" :bottom="true" v-model="snackbar.toggle">
 
-            {{ snackbarText }}
+            {{ snackbar.message }}
 
-            <v-btn flat color="pink" @click.native="snackbar = false">CLOSE</v-btn>
+            <v-btn flat color="pink" @click.native="snackbar.toggle = false">CLOSE</v-btn>
 
         </v-snackbar>
 
@@ -33,9 +33,15 @@
 
         return {
 
-          snackbar: false,
+          snackbar: {
 
-          snackbarText: 'Default'
+            toggle: false,
+
+            message: '',
+
+            timeout: process.env.SNACKBAR_TIMEOUT
+
+          }
 
         }
 
@@ -45,9 +51,9 @@
 
         showError (message) {
 
-          this.snackbarText = message;
+          this.snackbar.message = message;
 
-          this.snackbar = true;
+          this.snackbar.toggle = true;
 
         }
 
