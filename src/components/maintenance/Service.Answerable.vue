@@ -10,27 +10,19 @@
 
         <v-card-text>
 
-            <v-list v-for="item in answerable">
+            <span v-for="item in answerable" :key="item.id">
 
-                <v-list-tile>
+                <v-chip>
 
-                    <v-list-tile-avatar>
+                    <v-avatar><v-icon>{{ item.icon }}</v-icon></v-avatar>
 
-                        <v-icon large>{{ item.icon }}</v-icon>
+                    {{ item.content }}
 
-                    </v-list-tile-avatar>
+                </v-chip>
 
-                    <v-list-tile-content>
+                <br>
 
-                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-
-                        <v-list-tile-sub-title>{{ item.content }}</v-list-tile-sub-title>
-
-                    </v-list-tile-content>
-
-                </v-list-tile>
-
-            </v-list>
+            </span>
 
         </v-card-text>
 
@@ -49,10 +41,10 @@
 
           return [
 
-            {icon: 'account_circle', title: 'Name', 'content': service.answerable},
-            {icon: 'room', title: 'Local', 'content': 'Answerable Local'},
-            {icon: 'phone', title: 'Phone', 'content': 'Answerable Phone'},
-            {icon: 'email', title: 'E-mail', 'content': service.answerable_email}
+            {id: 1, icon: 'account_circle', title: 'Name', 'content': service.answerable},
+            {id: 2, icon: 'room', title: 'Local', 'content': 'Answerable Local'},
+            {id: 3, icon: 'phone', title: 'Phone', 'content': 'Answerable Phone'},
+            {id: 4, icon: 'email', title: 'E-mail', 'content': service.answerable_email}
 
           ];
 

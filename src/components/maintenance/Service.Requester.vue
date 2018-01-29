@@ -10,27 +10,23 @@
 
         <v-card-text>
 
-            <v-list v-for="item in requester">
+            <span v-for="item in requester" :key="item.id">
 
-                <v-list-tile>
+                <v-chip>
 
-                    <v-list-tile-avatar>
+                    <v-avatar>
 
-                        <v-icon large>{{ item.icon }}</v-icon>
+                        <v-icon>{{ item.icon }}</v-icon>
 
-                    </v-list-tile-avatar>
+                    </v-avatar>
 
-                    <v-list-tile-content>
+                    {{ item.content }}
 
-                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                </v-chip>
 
-                        <v-list-tile-sub-title>{{ item.content }}</v-list-tile-sub-title>
+                <br>
 
-                    </v-list-tile-content>
-
-                </v-list-tile>
-
-            </v-list>
+            </span>
 
         </v-card-text>
 
