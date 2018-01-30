@@ -20,7 +20,7 @@
 
                 </span>
 
-                <v-tabs centered>
+                <v-tabs centered v-model="tab">
 
                     <v-tabs-bar>
 
@@ -60,14 +60,59 @@
     import WorkspaceCard from '@/layouts/WorkspaceCard';
     import ServiceServiceShow from './Service.Service.Show';
     import ServiceOrderShow from './Service.Orders.Show';
+    import {MaintenanceResource} from '@/resources/MaintenanceResource';
 
-  export default {
+    export default {
 
     computed: {
 
       code () {
 
         return this.$store.state.service.service.code;
+
+      },
+
+      tab: {
+
+        set (value) {
+
+          if (value === 'orders') {
+
+            this._getOrders();
+
+          }
+
+        },
+
+        get () {
+
+        }
+
+      }
+
+    },
+
+    methods: {
+
+      _getOrders () {
+
+        let order = this.$store.state.order.order;
+
+        let service = this.$store.state.service.service;
+
+        if (order && order.service === service.id) {
+
+          return order;
+
+        }
+
+        MaintenanceResource.listOrders((response) => {
+
+          this.$store.state.order.order = response.data;
+
+          return response.data;
+
+        });
 
       }
 
