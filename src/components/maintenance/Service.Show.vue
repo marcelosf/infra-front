@@ -42,7 +42,7 @@
 
                         <v-tabs-content :id="'orders'">
 
-                            Orders
+                            <orders></orders>
 
                         </v-tabs-content>
 
@@ -59,6 +59,7 @@
 <script>
     import WorkspaceCard from '@/layouts/WorkspaceCard';
     import ServiceServiceShow from './Service.Service.Show';
+    import ServiceOrderShow from './Service.Orders.Show';
 
   export default {
 
@@ -75,6 +76,7 @@
     components: {
 
       'service': ServiceServiceShow,
+      'orders': ServiceOrderShow,
       'workspace-card': WorkspaceCard
 
     }
