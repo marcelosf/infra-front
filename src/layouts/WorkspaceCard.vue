@@ -6,6 +6,8 @@
 
             <v-toolbar-title>{{ title }}</v-toolbar-title>
 
+            <slot name="content"></slot>
+
             <v-spacer></v-spacer>
 
             <slot name="menu"></slot>
