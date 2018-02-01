@@ -17,11 +17,10 @@
             :label="label"
             v-model="dateFormatted"
             prepend-icon="event"
-            @blur="onDateFieldBlur"
         >
         </v-text-field>
 
-        <v-date-picker v-model="date" no-title scrollable actions @input="datePickerOnInput">
+        <v-date-picker v-model="date" no-title scrollable actions>
 
             <template slot-scope="{ save, cancel }">
 
@@ -45,15 +44,15 @@
 <script>
     export default {
 
-      props: ['label', 'model'],
+      props: ['label', 'value'],
 
       data () {
 
         return {
 
-          menu: false,
-
           date: null,
+
+          menu: false,
 
           dateFormatted: null,
 
@@ -63,33 +62,25 @@
 
       },
 
+      watch: {
+
+        value (value) {
+
+          value ? this.date = value : this.date = null;
+
+        },
+
+        date (value) {
+
+          this.dateFormatted = this._formatDate(value);
+
+          this.$emit('input', this.date);
+
+        }
+
+      },
+
       methods: {
-
-        onDateFieldBlur () {
-
-          this.date = this._parseDate(this.dateFormatted);
-
-          console.log(this.date);
-
-        },
-
-        datePickerOnInput (date) {
-
-          this.dateFormatted = this._formatDate(date);
-
-        },
-
-        _parseDate (date) {
-
-          if (!date) {
-
-            return null;
-
-          }
-
-          return date.replace(/(\d{1,2})\/(\d{1,2})\/(\d{4})/, '$3-$2-$1');
-
-        },
 
         _formatDate (date) {
 
