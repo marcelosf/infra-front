@@ -1,18 +1,30 @@
 export default {
 
-  service: {
+  order: {
 
-    code: '',
+    id: null,
+
+    created_at: '',
+
+    updated_at: '',
 
     description: '',
 
-    status: 'open',
+    start_date: '',
 
-    requester_id: '',
+    end_date: '',
 
-    answerable_id: '',
+    manager_id: null,
 
-    local_id: ''
+    observation: '',
+
+    report: '',
+
+    technical_id: null,
+
+    service_id: null,
+
+    status: ''
 
   },
 

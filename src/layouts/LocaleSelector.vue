@@ -66,7 +66,7 @@
 
 <script>
   import {Locales} from '@/resources/Locales';
-  import {Filter} from '@/filters/LocaleFilter';
+  import {Filter} from '@/filters/Filter';
 
   export default {
 

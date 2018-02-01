@@ -18,7 +18,7 @@
 
                         <blockquote class="blockquote">
 
-                            Observation text.
+                            {{ order ? order.observation : ''}}
 
                         </blockquote>
 
@@ -62,7 +62,13 @@
 
                     <v-card-text>
 
-                        <v-select label="Status"></v-select>
+                        <v-select
+                                label="Status"
+                                v-bind:items="statusItems"
+                                item-value="status"
+                                item-text="text"
+                                v-model="order"
+                        ></v-select>
 
                     </v-card-text>
 
@@ -84,7 +90,7 @@
 
                         <blockquote class="blockquote">
 
-                            Observation text.
+                            {{ order ? order.report : '' }}
 
                         </blockquote>
 
@@ -105,6 +111,53 @@
   import DatePicker from '@/layouts/DatePicker';
 
   export default {
+
+    data () {
+
+      return {
+
+        statusItems: [
+
+          {status: 'autorizado', text: 'autorizado'},
+          {status: 'andamento', text: 'andamento'},
+          {status: 'resolvido', text: 'resolvido'},
+          {status: 'cancelado', text: 'cancelado'},
+          {status: 'aguardando_info', text: 'aguardando_info'},
+          {status: 'aguardando_material', text: 'aguardando_material'}
+
+        ]
+
+      }
+
+    },
+
+    computed: {
+
+      order: {
+
+        get () {
+
+          return this.$store.state.order.order;
+
+        },
+
+        set (value) {
+
+          console.log(value);
+
+          this.$store.state.order.order.status = value;
+
+        }
+
+      },
+
+      orderStatus () {
+
+        return this.$store.getters.orders.status;
+
+      }
+
+    },
 
     components: {
 

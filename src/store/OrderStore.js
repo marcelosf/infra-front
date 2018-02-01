@@ -4,15 +4,33 @@ export const OrderStore = {
 
   state: {
 
-    order: {}
+    orders: [],
+
+    order: null
 
   },
 
   mutations: {
 
+    setOrders (orders, ordersData) {
+
+      orders = ordersData;
+
+    },
+
     setOrder (order, orderData) {
 
       order = orderData;
+
+    }
+
+  },
+
+  getters: {
+
+    status (state) {
+
+      return state.order.status;
 
     }
 

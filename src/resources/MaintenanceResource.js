@@ -2,7 +2,7 @@ import {Resource} from '@/resources/Resource';
 
 const CREATE_SERVICE_URL = 'maintenance/service/service';
 const LIST_SERVICES_URL = 'maintenance/service/service';
-const LIST_ORDERS_URL = 'maintenance/order/order';
+const LIST_ORDERS_BY_SERVICE_URL = 'maintenance/order/list-by-service/';
 const UPDATE_SERVICES_URL = 'maintenance/service/service/';
 
 export class MaintenanceResource extends Resource {
@@ -33,11 +33,11 @@ export class MaintenanceResource extends Resource {
 
   }
 
-  static listOrders (action, errors) {
+  static listOrdersByService (service, action, errors) {
 
-    this._getApi().get(LIST_ORDERS_URL).then((response) => {
+    this._getApi().get(LIST_ORDERS_BY_SERVICE_URL + service).then((response) => {
 
-      action(response.data);
+      action(response.data.data);
 
     }).catch(errors);
 
