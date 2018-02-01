@@ -34,7 +34,8 @@
 
                     <v-card-text>
 
-                        <date-picker label="Start date"></date-picker>
+                        <date-picker label="Start date" v-model="start_date">
+                        </date-picker>
 
                     </v-card-text>
 
@@ -48,7 +49,8 @@
 
                     <v-card-text>
 
-                        <date-picker label="End date"></date-picker>
+                        <date-picker label="End date" v-model="end_date">
+                        </date-picker>
 
                     </v-card-text>
 
@@ -143,17 +145,41 @@
 
         set (value) {
 
-          console.log(value);
-
           this.$store.state.order.order.status = value;
 
         }
 
       },
 
-      orderStatus () {
+      start_date: {
 
-        return this.$store.getters.orders.status;
+        get () {
+
+          return this.$store.state.order.order.start_date;
+
+        },
+
+        set (value) {
+
+          this.$store.state.order.order.start_date = value;
+
+        }
+
+      },
+
+      end_date: {
+
+        get () {
+
+          return this.$store.state.order.order.end_date;
+
+        },
+
+        set (value) {
+
+          this.$store.state.order.order.end_date = value;
+
+        }
 
       }
 
