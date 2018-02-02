@@ -72,7 +72,7 @@
 
         date (value) {
 
-          this.dateFormatted = this._formatDate(value);
+          value ? this.dateFormatted = this._formatDate(value) : this.dateFormatted = null;
 
           this.$emit('input', this.date);
 

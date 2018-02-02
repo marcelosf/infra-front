@@ -4,6 +4,7 @@ const CREATE_SERVICE_URL = 'maintenance/service/service';
 const LIST_SERVICES_URL = 'maintenance/service/service';
 const LIST_ORDERS_BY_SERVICE_URL = 'maintenance/order/list-by-service/';
 const UPDATE_SERVICES_URL = 'maintenance/service/service/';
+const UPDATE_ORDER_URL = 'maintenance/order/order/';
 
 export class MaintenanceResource extends Resource {
 
@@ -37,7 +38,17 @@ export class MaintenanceResource extends Resource {
 
     this._getApi().get(LIST_ORDERS_BY_SERVICE_URL + service).then((response) => {
 
-      action(response.data.data);
+      (response.data.data.length > 0) ? action(response.data.data) : action(null);
+
+    }).catch(errors);
+
+  }
+
+  static updateOrder (order, action, errors) {
+
+    this._getApi().put((UPDATE_ORDER_URL + order.id), order).then((response) => {
+
+      action(response.data);
 
     }).catch(errors);
 

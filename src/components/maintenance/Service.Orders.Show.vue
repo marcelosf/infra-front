@@ -28,7 +28,7 @@
 
             </v-flex>
 
-            <v-flex xs12 sm6 md6 lg6>
+            <v-flex xs12 sm4 md4 lg4>
 
                 <v-card flat>
 
@@ -43,7 +43,7 @@
 
             </v-flex>
 
-            <v-flex xs12 sm6 md6 lg6>
+            <v-flex xs12 sm4 md4 lg4>
 
                 <v-card flat>
 
@@ -58,7 +58,7 @@
 
             </v-flex>
 
-            <v-flex xs12 sm12 md12 lg12>
+            <v-flex xs12 sm4 md4 lg4>
 
                 <v-card flat>
 
@@ -70,7 +70,31 @@
                                 item-value="status"
                                 item-text="text"
                                 v-model="order"
-                        ></v-select>
+                        >
+                        </v-select>
+
+                    </v-card-text>
+
+                </v-card>
+
+            </v-flex>
+
+            <v-flex xs12 sm12 md12 lg12>
+
+                <v-card flat>
+
+                    <v-card-text>
+
+                        <v-select
+                                v-bind:items="techniciansItems"
+                                item-value="id"
+                                item-text="name"
+                                v-model="technicians"
+                                label="Technicians"
+                                multiple
+                                chips
+                        >
+                        </v-select>
 
                     </v-card-text>
 
@@ -111,8 +135,17 @@
 
 <script>
   import DatePicker from '@/layouts/DatePicker';
+  import {UserResource} from '@/resources/UserResource';
 
   export default {
+
+    props: ['value'],
+
+    created () {
+
+      this._initialize();
+
+    },
 
     data () {
 
@@ -127,7 +160,23 @@
           {status: 'aguardando_info', text: 'aguardando_info'},
           {status: 'aguardando_material', text: 'aguardando_material'}
 
-        ]
+        ],
+
+        techniciansItems: [],
+
+        order: {}
+
+      }
+
+    },
+
+    watch: {
+
+      value (value) {
+
+        this.order = value;
+
+        this._emitOrder();
 
       }
 
@@ -135,33 +184,25 @@
 
     computed: {
 
-      order: {
-
-        get () {
-
-          return this.$store.state.order.order;
-
-        },
-
-        set (value) {
-
-          this.$store.state.order.order.status = value;
-
-        }
-
-      },
-
       start_date: {
 
         get () {
 
-          return this.$store.state.order.order.start_date;
+          if (this.value) {
+
+            return this.value.start_date;
+
+          }
+
+          return null;
 
         },
 
         set (value) {
 
-          this.$store.state.order.order.start_date = value;
+          this.order.start_date = value;
+
+          this._emitOrder();
 
         }
 
@@ -171,15 +212,71 @@
 
         get () {
 
-          return this.$store.state.order.order.end_date;
+          if (this.value) {
+
+            return this.value.end_date;
+
+          }
+
+          return null;
 
         },
 
         set (value) {
 
-          this.$store.state.order.order.end_date = value;
+          this.order.end_date = value;
+
+          this._emitOrder();
 
         }
+
+      },
+
+      technicians: {
+
+        get () {
+
+          if (this.value) {
+
+            return this.value.technicians;
+
+          }
+
+        },
+
+        set (value) {
+
+          this.order.technicians = value;
+
+          this._emitOrder();
+
+        }
+
+      }
+
+    },
+
+    methods: {
+
+      _initialize () {
+
+        this._loadTechnicians();
+
+      },
+
+      _loadTechnicians () {
+
+        UserResource.list((response) => {
+
+          this.techniciansItems = response.data;
+
+        });
+
+      },
+
+      _emitOrder () {
+
+        this.$emit('input', this.order);
 
       }
 

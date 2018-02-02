@@ -4,13 +4,13 @@
 
         <workspace-card :title="title | capitalize ">
 
-                <span slot="content" v-if="ordersTab" class="mx-3 mt-2">
+                <span slot="content" v-if="ordersTab && hasOrders" class="mx-3 mt-2">
 
                         <v-select
                                 v-bind:items="orders"
                                 item-text="code"
                                 item-value="id"
-                                v-model="order"
+                                v-model="orderSelector"
                         >
                         </v-select>
 
@@ -40,7 +40,7 @@
 
                         <v-tabs-item :href="'#service'">Service</v-tabs-item>
 
-                        <v-tabs-item :href="'#orders'">Orders</v-tabs-item>
+                        <v-tabs-item :href="'#orders'" v-if="hasOrders">Orders</v-tabs-item>
 
                     </v-tabs-bar>
 
@@ -52,9 +52,11 @@
 
                         </v-tabs-content>
 
-                        <v-tabs-content :id="'orders'">
+                        <v-tabs-content :id="'orders'" v-if="hasOrders">
 
-                            <orders></orders>
+                            <orders v-model="order">
+
+                            </orders>
 
                         </v-tabs-content>
 
@@ -90,13 +92,21 @@
 
             selectedTab: null,
 
-            selectedOrder: null
+            selectedOrder: null,
+
+            order: null
 
           }
 
         },
 
         computed: {
+
+          hasOrders () {
+
+            return this.$store.state.order.orders !== null;
+
+          },
 
           title () {
 
@@ -126,27 +136,31 @@
 
           },
 
-          order: {
+          orderSelector: {
 
             get () {
 
-              if (!this.$store.state.order.order) {
+              if (this.$store.state.order.orders) {
 
-                this.$store.state.order.order = this.$store.state.order.orders[0];
+                let firstOrder = this._getFirsOrder(this.$store.state.order.orders);
 
-                return this.$store.state.order.order;
+                this.order = firstOrder;
+
+                return firstOrder;
 
               }
 
-              return this.$store.state.order.order;
+              return null;
 
             },
 
             set (value) {
 
-              let order = Filter.byParameterKey(value, 'id', this.$store.state.order.orders);
+              let order = this._find(value);
 
-              this.$store.state.order.order = order[0];
+              this.order = order;
+
+              return order;
 
             }
 
@@ -160,21 +174,31 @@
 
             this._loadOrders();
 
-            this.$store.state.order.order = null;
-
           },
 
           _loadOrders () {
 
             let service = this.$store.state.service.service;
 
-                MaintenanceResource.listOrdersByService(service.id, (response) => {
+            MaintenanceResource.listOrdersByService(service.id, (orders) => {
 
-                  this.$store.state.order.orders = response;
+              this.$store.state.order.orders = orders;
 
-                });
+            });
 
-            }
+          },
+
+          _getFirsOrder (orders) {
+
+            return orders[0];
+
+          },
+
+          _find (order) {
+
+            return Filter.byParameterKey(order, 'id', this.$store.state.order.orders)[0];
+
+          }
 
         },
 
