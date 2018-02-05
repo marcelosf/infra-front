@@ -69,7 +69,7 @@
                                 v-bind:items="statusItems"
                                 item-value="status"
                                 item-text="text"
-                                v-model="order"
+                                v-model="status"
                         >
                         </v-select>
 
@@ -164,7 +164,7 @@
 
         techniciansItems: [],
 
-        order: {}
+        order: null
 
       }
 
@@ -175,8 +175,6 @@
       value (value) {
 
         this.order = value;
-
-        this._emitOrder();
 
       }
 
@@ -200,9 +198,13 @@
 
         set (value) {
 
-          this.order.start_date = value;
+          if (this._isUpdated(value, this.order.start_date)) {
 
-          this._emitOrder();
+            this.order.start_date = value;
+
+            this._emitOrder();
+
+          }
 
         }
 
@@ -224,9 +226,13 @@
 
         set (value) {
 
-          this.order.end_date = value;
+          if (this._isUpdated(value, this.order.end_date)) {
 
-          this._emitOrder();
+            this.order.end_date = value;
+
+            this._emitOrder();
+
+          }
 
         }
 
@@ -246,9 +252,41 @@
 
         set (value) {
 
-          this.order.technicians = value;
+          if (this._isUpdated(value, this.order.technicians)) {
 
-          this._emitOrder();
+            this.order.technicians = value;
+
+            this._emitOrder();
+
+          }
+
+        }
+
+      },
+
+      status: {
+
+        get () {
+
+          if (this.value) {
+
+            return this.value.status;
+
+          }
+
+          return null;
+
+        },
+
+        set (value) {
+
+          if (this._isUpdated(value, this.order.status)) {
+
+            this.$set(this.order, 'status', value);
+
+            this._emitOrder();
+
+          }
 
         }
 
@@ -276,7 +314,17 @@
 
       _emitOrder () {
 
+        console.log('emitted');
+
         this.$emit('input', this.order);
+
+        this.$emit('updated');
+
+      },
+
+      _isUpdated (value1, value2) {
+
+        return value1 !== value2;
 
       }
 

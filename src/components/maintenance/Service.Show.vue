@@ -54,7 +54,9 @@
 
                         <v-tabs-content :id="'orders'" v-if="hasOrders">
 
-                            <orders v-model="order">
+                            {{ order ? order.status : '' }}
+
+                            <orders v-model="order" @updated="_updateOrder">
 
                             </orders>
 
@@ -77,6 +79,7 @@
     import {MaintenanceResource} from '@/resources/MaintenanceResource';
     import {TextFilters} from '@/filters/TextFilters';
     import {Filter} from '@/filters/Filter';
+    import Order from './Entities/Order';
 
     export default {
 
@@ -94,7 +97,7 @@
 
             selectedOrder: null,
 
-            order: null
+            order: Order.order
 
           }
 
@@ -197,6 +200,15 @@
           _find (order) {
 
             return Filter.byParameterKey(order, 'id', this.$store.state.order.orders)[0];
+
+          },
+
+          _updateOrder () {
+
+            console.log('testa');
+            MaintenanceResource.updateOrder(this.order, (response) => {
+
+            });
 
           }
 
