@@ -138,7 +138,7 @@
 
                     <v-card-text>
 
-                        <epis v-model="epis" :items="epiItems">
+                        <epis v-model="order" :items="epiItems" @updated="_emitOrder">
 
                         </epis>
 
@@ -189,8 +189,6 @@
 
         order: null,
 
-        epis: [],
-
         epiItems: []
 
       }
@@ -202,8 +200,6 @@
       value (value) {
 
         this.order = value;
-
-        this.epis = value;
 
       }
 
@@ -354,8 +350,6 @@
       },
 
       _emitOrder () {
-
-        console.log('emitted');
 
         this.$emit('input', this.order);
 
