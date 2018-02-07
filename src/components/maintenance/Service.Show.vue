@@ -66,12 +66,17 @@
 
         </workspace-card>
 
+        <message :message="message.text" v-model="message.toggle">
+
+        </message>
+
     </v-container>
 
 </template>
 
 <script>
     import WorkspaceCard from '@/layouts/WorkspaceCard';
+    import SnackBar from '@/layouts/SnackBar';
     import ServiceServiceShow from './Service.Service.Show';
     import ServiceOrderShow from './Service.Orders.Show';
     import {MaintenanceResource} from '@/resources/MaintenanceResource';
@@ -95,7 +100,15 @@
 
             selectedOrder: null,
 
-            order: Order.order
+            order: Order.order,
+
+            message: {
+
+              toggle: false,
+
+              text: ''
+
+            }
 
           }
 
@@ -203,10 +216,19 @@
 
           _updateOrder () {
 
-            console.log('testa');
             MaintenanceResource.updateOrder(this.order, (response) => {
 
+              this._sendMessage(response.message);
+
             });
+
+          },
+
+          _sendMessage (text) {
+
+            this.message.text = text;
+
+            this.message.toggle = true;
 
           }
 
@@ -216,7 +238,8 @@
 
           'service': ServiceServiceShow,
           'orders': ServiceOrderShow,
-          'workspace-card': WorkspaceCard
+          'workspace-card': WorkspaceCard,
+          'message': SnackBar
 
         },
 
