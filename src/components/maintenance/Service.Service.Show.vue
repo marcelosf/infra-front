@@ -54,13 +54,9 @@
 
                 </v-card>
 
-                <v-snackbar :timeout="snackbar.timeout" :bottom="true" v-model="snackbar.toggle">
+                <message :message="message.text" v-model="message.toggle">
 
-                    {{ snackbar.message }}
-
-                    <v-btn flat color="pink" @click.native="snackbar.toggle = false">CLOSE</v-btn>
-
-                </v-snackbar>
+                </message>
 
             </v-flex>
 
@@ -72,6 +68,7 @@
 
 <script>
   import WorkspaceCard from '@/layouts/WorkspaceCard';
+  import SnackBar from '@/layouts/SnackBar';
   import ServiceRequester from './Service.Requester';
   import ServiceAnswerable from './Service.Answerable';
   import {MaintenanceResource} from '@/resources/MaintenanceResource';
@@ -95,11 +92,9 @@
 
           ],
 
-        snackbar: {
+        message: {
 
-          timeout: parseInt(process.env.SNACKBAR_TIMEOUT),
-
-          message: '',
+          text: '',
 
           toggle: false
 
@@ -162,9 +157,9 @@
 
       _sendMessage (message) {
 
-        this.snackbar.message = message;
+        this.message.text = message;
 
-        this.snackbar.toggle = true;
+        this.message.toggle = true;
 
       }
 
@@ -174,7 +169,8 @@
 
       'workspace-card': WorkspaceCard,
       'service-requester': ServiceRequester,
-      'service-answerable': ServiceAnswerable
+      'service-answerable': ServiceAnswerable,
+      'message': SnackBar
 
     }
 

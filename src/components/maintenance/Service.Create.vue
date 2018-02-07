@@ -47,23 +47,18 @@
 
         </workspace-card>
 
-        <v-snackbar :timeout="snackbar.timeout" :bottom="true" v-model="snackbar.toggle">
+        <message :message="message.text" v-model="message.toggle">
 
-            {{ snackbar.message }}
-
-            <v-btn flat color="pink" @click.native="snackbar.toggle = false">CLOSE</v-btn>
-
-        </v-snackbar>
+        </message>
 
     </v-container>
-
-
 
 </template>
 
 <script>
     import WorkspaceCard from '@/layouts/WorkspaceCard';
     import LocaleSelector from '@/layouts/LocaleSelector';
+    import SnackBar from '@/layouts/SnackBar';
     import {Locales} from '@/resources/Locales';
     import {UserResource} from '@/resources/UserResource';
     import {MaintenanceResource} from '@/resources/MaintenanceResource';
@@ -88,13 +83,11 @@
 
           userItems: [],
 
-          snackbar: {
+          message: {
 
             toggle: false,
 
-            message: '',
-
-            timeout: process.env.SNACKBAR_TIMEOUT
+            text: ''
 
           }
 
@@ -148,9 +141,9 @@
 
         showMessage (message) {
 
-          this.snackbar.message = message;
+          this.message.text = message;
 
-          this.snackbar.toggle = true;
+          this.message.toggle = true;
 
         },
 
@@ -167,7 +160,8 @@
       components: {
 
         'workspace-card': WorkspaceCard,
-        'locale-selector': LocaleSelector
+        'locale-selector': LocaleSelector,
+        'message': SnackBar
 
       }
 
