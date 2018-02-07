@@ -102,13 +102,13 @@
 
             </v-flex>
 
-            <v-flex xs12 sm12 md12 lg12>
+            <v-flex xs12 sm4 md4 lg4>
 
-                <v-card flat>
+                <v-card flat color="grey lighten-4">
 
                     <v-card-title primary-title>
 
-                        <div class="title">Report</div>
+                        <div class="title">Technical Area</div>
 
                     </v-card-title>
 
@@ -116,7 +116,7 @@
 
                         <blockquote class="blockquote">
 
-                            {{ order ? order.report : '' }}
+                            {{ order ? order.technical.name : null }}
 
                         </blockquote>
 
@@ -126,6 +126,27 @@
 
             </v-flex>
 
+            <v-flex>
+
+                <v-card flat>
+
+                    <v-card-title>
+
+                        <div class="title">EPIs</div>
+
+                    </v-card-title>
+
+                    <v-card-text>
+
+                        <epis v-model="epis" :items="epiItems">
+
+                        </epis>
+
+                    </v-card-text>
+
+                </v-card>
+
+            </v-flex>
 
         </v-layout>
 
@@ -136,6 +157,8 @@
 <script>
   import DatePicker from '@/layouts/DatePicker';
   import {UserResource} from '@/resources/UserResource';
+  import Epis from './Service.Orders.Show.Epis';
+  import {MaintenanceResource} from '@/resources/MaintenanceResource';
 
   export default {
 
@@ -164,7 +187,11 @@
 
         techniciansItems: [],
 
-        order: null
+        order: null,
+
+        epis: [],
+
+        epiItems: []
 
       }
 
@@ -175,6 +202,8 @@
       value (value) {
 
         this.order = value;
+
+        this.epis = value;
 
       }
 
@@ -300,6 +329,8 @@
 
         this._loadTechnicians();
 
+        this._loadEpiItems();
+
       },
 
       _loadTechnicians () {
@@ -307,6 +338,16 @@
         UserResource.list((response) => {
 
           this.techniciansItems = response.data;
+
+        });
+
+      },
+
+      _loadEpiItems () {
+
+        MaintenanceResource.listEpis((epis) => {
+
+          this.epiItems = epis;
 
         });
 
@@ -332,7 +373,8 @@
 
     components: {
 
-      'date-picker': DatePicker
+      'date-picker': DatePicker,
+      'epis': Epis
 
     }
 

@@ -4,15 +4,15 @@
 
         <workspace-card :title="title | capitalize ">
 
-                <span slot="content" v-if="ordersTab && hasOrders" class="mx-3 mt-2">
+            <span slot="content" v-if="ordersTab && hasOrders" class="mx-3 mt-2">
 
-                        <v-select
-                                v-bind:items="orders"
-                                item-text="code"
-                                item-value="id"
-                                v-model="orderSelector"
-                        >
-                        </v-select>
+                    <v-select
+                        v-bind:items="orders"
+                        item-text="code"
+                        item-value="id"
+                        v-model="orderSelector"
+                    >
+                    </v-select>
 
                 </span>
 
@@ -53,8 +53,6 @@
                         </v-tabs-content>
 
                         <v-tabs-content :id="'orders'" v-if="hasOrders">
-
-                            {{ order ? order.status : '' }}
 
                             <orders v-model="order" @updated="_updateOrder">
 
