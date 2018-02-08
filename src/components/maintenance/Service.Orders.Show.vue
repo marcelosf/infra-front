@@ -12,6 +12,24 @@
 
                         <div class="title">Observation</div>
 
+                        <v-spacer></v-spacer>
+
+                        <v-btn flat color="primary" @click.stop="dialog = true">
+
+                            Reports
+
+                            <v-icon right>assignment</v-icon>
+
+                        </v-btn>
+
+                        <v-btn flat color="primary">
+
+                            New Order
+
+                            <v-icon right>add</v-icon>
+
+                        </v-btn>
+
                     </v-card-title>
 
                     <v-card-text>
@@ -148,6 +166,14 @@
 
             </v-flex>
 
+            <v-dialog v-model="dialog" fullscreen :transition="transition" :overlay="false" scrollable>
+
+                <reports v-model="dialog" :order="order">
+
+                </reports>
+
+            </v-dialog>
+
         </v-layout>
 
     </div>
@@ -158,6 +184,7 @@
   import DatePicker from '@/layouts/DatePicker';
   import {UserResource} from '@/resources/UserResource';
   import Epis from './Service.Orders.Show.Epis';
+  import Reports from './Service.Order.Reports';
   import {MaintenanceResource} from '@/resources/MaintenanceResource';
 
   export default {
@@ -189,7 +216,11 @@
 
         order: null,
 
-        epiItems: []
+        epiItems: [],
+
+        dialog: false,
+
+        transition: 'dialog-bottom-transition'
 
       }
 
@@ -368,7 +399,8 @@
     components: {
 
       'date-picker': DatePicker,
-      'epis': Epis
+      'epis': Epis,
+      'reports': Reports
 
     }
 

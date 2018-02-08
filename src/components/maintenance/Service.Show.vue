@@ -4,7 +4,7 @@
 
         <workspace-card :title="title | capitalize ">
 
-            <span slot="content" v-if="ordersTab && hasOrders" class="mx-3 mt-2">
+                <span slot="content" v-if="ordersTab && hasOrders" class="mx-3 mt-2">
 
                     <v-select
                         v-bind:items="orders"

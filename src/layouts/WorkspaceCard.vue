@@ -2,7 +2,7 @@
 
     <v-card>
 
-        <v-toolbar class="white">
+        <v-toolbar :class="classes ? classes : 'white'">
 
             <v-toolbar-title>{{ title }}</v-toolbar-title>
 
@@ -31,7 +31,7 @@
 <script>
     export default {
 
-      props: ['title']
+      props: ['title', 'classes']
 
     }
 </script>
