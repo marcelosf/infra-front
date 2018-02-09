@@ -1,6 +1,6 @@
-import {Filter} from '@/filters/LocaleFilter';
+import {Filter} from '@/filters/Filter';
 
-describe('Provide a array filter', () => {
+describe('Provide an array filter', () => {
 
   let array = [{id: 1, value: 1}, {id: 2, value: 1}, {id: 3, value: 4}];
 

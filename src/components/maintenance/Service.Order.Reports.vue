@@ -24,11 +24,25 @@
 
         <v-expansion-panel>
 
-            <v-expansion-panel-content v-for="(item,i) in 5" :key="i">
+            <v-expansion-panel-content v-for="(report,i) in reports" :key="i">
 
                 <div slot="header">
 
-                    User Name
+                    <v-layout wrap row>
+
+                        <v-flex xs3 sm3 md3>
+
+                            <b>Sent on:</b> {{ report ? report.created_at : '' | dateTimeBr }}
+
+                        </v-flex>
+
+                        <v-flex xs9 sm9 md9>
+
+                            <b>By:</b> {{ report ? report.user.name : '' }}
+
+                        </v-flex>
+
+                    </v-layout>
 
                 </div>
 
@@ -36,7 +50,7 @@
 
                     <v-card-text class="grey lighten-3">
 
-                        Report Content
+                        {{ report ? report.content : '' }}
 
                     </v-card-text>
 
@@ -46,12 +60,17 @@
 
         </v-expansion-panel>
 
+        <report-create></report-create>
+
     </workspace>
 
 </template>
 
 <script>
   import Workspace from '@/layouts/WorkspaceCard';
+  import {MaintenanceResource} from '@/resources/MaintenanceResource';
+  import {DateTimeFilter} from '@/filters/DateTimeFilter';
+  import ReportCreate from './Service.Order.Report.Create';
 
   export default {
 
@@ -61,7 +80,9 @@
 
       return {
 
-        dialog: true
+        dialog: true,
+
+        reports: []
 
       }
 
@@ -75,15 +96,37 @@
 
       },
 
-      dialog (value) {
+      dialog (dialog) {
 
-        this.$emit('input', value);
+        if (dialog && this.order) this._loadReports(this.order.id);
+
+        this._emitReport(dialog);
+
+      }
+
+    },
+
+    methods: {
+
+      _emitReport (value) {
+
+        this.$emit('input', value)
 
       },
 
-      order (value) {
+      _loadReports (order) {
 
-        console.log(value);
+        if (order) {
+
+          MaintenanceResource.listOrderReportsByOrder(order, (reports) => {
+
+            console.log(reports);
+
+            this.reports = reports;
+
+          });
+
+        }
 
       }
 
@@ -91,10 +134,21 @@
 
     components: {
 
-      'workspace': Workspace
+      'workspace': Workspace,
+      'report-create': ReportCreate
+
+    },
+
+    filters: {
+
+      dateTimeBr (date) {
+
+        return DateTimeFilter.formatToBr(date);
+
+      }
 
     }
 
-    }
+  }
 
 </script>
