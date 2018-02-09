@@ -6,7 +6,7 @@ export class TokenInterceptor extends Middleware {
 
     let headerValue = 'Bearer ' + token;
 
-    return super.interceptHeader(api, 'Authorization', headerValue);
+    return super.interceptPostHeader(api, 'Authorization', headerValue);
 
   }
 
