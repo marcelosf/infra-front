@@ -12,4 +12,12 @@ export class DateTimeFilter {
 
   }
 
+  static getCurrentTimestamp () {
+
+    let now = new Date();
+
+    return now.getDate() + '/' + now.getMonth() + '/' + now.getFullYear();
+
+  }
+
 }

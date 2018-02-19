@@ -99,7 +99,9 @@
 
         _triggerLoginError (error) {
 
-          this.$emit('error', error.response.data.message);
+          console.log(error);
+
+          this.$emit('error', error.response);
 
         }
 

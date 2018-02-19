@@ -30,13 +30,19 @@
 
                     <v-layout wrap row>
 
+                        <v-flex xs2 sm2 md2>
+
+                            {{ i + 1 }}
+
+                        </v-flex>
+
                         <v-flex xs3 sm3 md3>
 
                             <b>Sent on:</b> {{ report ? report.created_at : '' | dateTimeBr }}
 
                         </v-flex>
 
-                        <v-flex xs9 sm9 md9>
+                        <v-flex xs7 sm7 md7>
 
                             <b>By:</b> {{ report ? report.user.name : '' }}
 
@@ -60,7 +66,7 @@
 
         </v-expansion-panel>
 
-        <report-create></report-create>
+        <report-create v-model="report" @input="saveReport"></report-create>
 
     </workspace>
 
@@ -80,9 +86,11 @@
 
       return {
 
-        dialog: true,
+        dialog: false,
 
-        reports: []
+        reports: [],
+
+        report: null
 
       }
 
@@ -114,19 +122,53 @@
 
       },
 
+      saveReport (report) {
+
+        if (report) {
+
+          this._setReportOrderId();
+
+          this._storeOrderReport();
+
+        }
+
+      },
+
       _loadReports (order) {
 
         if (order) {
 
           MaintenanceResource.listOrderReportsByOrder(order, (reports) => {
 
-            console.log(reports);
-
             this.reports = reports;
 
           });
 
         }
+
+      },
+
+      _storeOrderReport () {
+
+        MaintenanceResource.storeOrderReport(this.report, (response) => {
+
+          console.log('store');
+
+          this._pushReport(response.data);
+
+        });
+
+      },
+
+      _setReportOrderId () {
+
+        if (this.report) this.report.order_id = this.order.id;
+
+      },
+
+      _pushReport (report) {
+
+        this._loadReports(report.order_id);
 
       }
 

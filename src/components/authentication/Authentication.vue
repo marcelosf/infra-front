@@ -39,7 +39,7 @@
 
             message: '',
 
-            timeout: process.env.SNACKBAR_TIMEOUT
+            timeout: parseInt(process.env.SNACKBAR_TIMEOUT)
 
           }
 

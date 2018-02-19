@@ -6,7 +6,7 @@ const LIST_ORDERS_BY_SERVICE_URL = 'maintenance/order/list-by-service/';
 const UPDATE_SERVICES_URL = 'maintenance/service/service/';
 const UPDATE_ORDER_URL = 'maintenance/order/order/';
 const LIST_EPIS_URL = 'maintenance/epi/epi';
-const LIST_ORDER_REPORTS_URL = 'maintenance/order/reports';
+const ORDER_REPORTS_URL = 'maintenance/order/reports';
 
 export class MaintenanceResource extends Resource {
 
@@ -68,9 +68,19 @@ export class MaintenanceResource extends Resource {
 
   static listOrderReportsByOrder (order, action, errors) {
 
-    this._getApi().get(LIST_ORDER_REPORTS_URL + '?search=order_id:' + order).then((response) => {
+    this._getApi().get(ORDER_REPORTS_URL + '?search=order_id:' + order).then((response) => {
 
       action(response.data.data);
+
+    }).catch(errors);
+
+  }
+
+  static storeOrderReport (report, action, errors) {
+
+    this._getApi().post(ORDER_REPORTS_URL, report).then((response) => {
+
+      action(response.data);
 
     }).catch(errors);
 
