@@ -4,7 +4,7 @@
 
         {{ message }}
 
-        <v-btn flat color="pink" @click.native="snackbar.toggle = false">CLOSE</v-btn>
+        <v-btn flat color="pink" @click.native="closeSnackBar">CLOSE</v-btn>
 
     </v-snackbar>
 
@@ -40,6 +40,16 @@
         toggle (value) {
 
           this.$emit('input', value);
+
+        }
+
+      },
+
+      methods: {
+
+        closeSnackBar () {
+
+          this.toggle = false;
 
         }
 
