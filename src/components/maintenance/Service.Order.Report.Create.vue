@@ -44,7 +44,7 @@
 
 <script>
     import Report from '@/components/maintenance/Entities/Report';
-    import {User} from '@/resources/User'
+    import {User} from '@/resources/User';
 
     export default {
 

@@ -1,6 +1,7 @@
 <template>
 
     <v-select
+        :label="label || ''"
         v-bind:items="items"
         v-model="epis"
         item-value="id"
@@ -16,7 +17,7 @@
 <script>
     export default {
 
-      props: ['items', 'value'],
+      props: ['items', 'value', 'label'],
 
       data () {
 

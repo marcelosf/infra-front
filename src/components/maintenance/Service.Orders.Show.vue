@@ -14,7 +14,7 @@
 
                         <v-spacer></v-spacer>
 
-                        <v-btn flat color="primary" @click.stop="dialog = true">
+                        <v-btn flat color="primary" @click.stop="openReportDialog">
 
                             Reports
 
@@ -22,7 +22,7 @@
 
                         </v-btn>
 
-                        <v-btn flat color="primary">
+                        <v-btn flat color="primary" @click.stop="openNewOrderDialog">
 
                             New Order
 
@@ -168,9 +168,13 @@
 
             <v-dialog v-model="dialog" fullscreen :transition="transition" :overlay="false" scrollable>
 
-                <reports v-model="dialog" :order="order">
+                <reports v-model="dialog" :order="order" v-show="reportIsSelected">
 
                 </reports>
+
+                <new-order v-model="dialog" v-show="newOrderIsSelected">
+
+                </new-order>
 
             </v-dialog>
 
@@ -185,7 +189,11 @@
   import {UserResource} from '@/resources/UserResource';
   import Epis from './Service.Orders.Show.Epis';
   import Reports from './Service.Order.Reports';
+  import OderCreate from './Service.Order.Create';
   import {MaintenanceResource} from '@/resources/MaintenanceResource';
+
+  const REPORT_SELECTOR = 'report';
+  const NEW_ORDER_SELECTOR = 'newOrder';
 
   export default {
 
@@ -219,6 +227,8 @@
         epiItems: [],
 
         dialog: false,
+
+        dialogSelector: null,
 
         transition: 'dialog-bottom-transition'
 
@@ -346,6 +356,18 @@
 
         }
 
+      },
+
+      reportIsSelected () {
+
+        return this.dialogSelector === REPORT_SELECTOR;
+
+      },
+
+      newOrderIsSelected () {
+
+        return this.dialogSelector === NEW_ORDER_SELECTOR;
+
       }
 
     },
@@ -392,6 +414,22 @@
 
         return value1 !== value2;
 
+      },
+
+      openReportDialog () {
+
+        this.dialogSelector = REPORT_SELECTOR;
+
+        this.dialog = true;
+
+      },
+
+      openNewOrderDialog () {
+
+        this.dialogSelector = NEW_ORDER_SELECTOR;
+
+        this.dialog = true;
+
       }
 
     },
@@ -400,7 +438,8 @@
 
       'date-picker': DatePicker,
       'epis': Epis,
-      'reports': Reports
+      'reports': Reports,
+      'new-order': OderCreate
 
     }
 
