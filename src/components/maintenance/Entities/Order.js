@@ -24,7 +24,11 @@ export default {
 
     service_id: null,
 
-    status: ''
+    technicians: [],
+
+    epis: [],
+
+    status: 'Test'
 
   },
 
