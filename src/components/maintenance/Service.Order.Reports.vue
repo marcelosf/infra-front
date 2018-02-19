@@ -66,7 +66,13 @@
 
         </v-expansion-panel>
 
-        <report-create v-model="report" @input="saveReport"></report-create>
+        <report-create v-model="report" @input="saveReport">
+
+        </report-create>
+
+        <message v-model="message.toggle" :message="message.text">
+
+        </message>
 
     </workspace>
 
@@ -77,6 +83,7 @@
   import {MaintenanceResource} from '@/resources/MaintenanceResource';
   import {DateTimeFilter} from '@/filters/DateTimeFilter';
   import ReportCreate from './Service.Order.Report.Create';
+  import SnackBar from '@/layouts/SnackBar';
 
   export default {
 
@@ -90,7 +97,15 @@
 
         reports: [],
 
-        report: null
+        report: null,
+
+        message: {
+
+          toggle: false,
+
+          text: ''
+
+        }
 
       }
 
@@ -156,6 +171,12 @@
 
           this._pushReport(response.data);
 
+          this._showMessage(response.message);
+
+        }, (error) => {
+
+          this._showMessage(error.message);
+
         });
 
       },
@@ -170,6 +191,14 @@
 
         this._loadReports(report.order_id);
 
+      },
+
+      _showMessage (text) {
+
+        this.message.text = text;
+
+        this.message.toggle = true;
+
       }
 
     },
@@ -177,7 +206,8 @@
     components: {
 
       'workspace': Workspace,
-      'report-create': ReportCreate
+      'report-create': ReportCreate,
+      'message': SnackBar
 
     },
 
