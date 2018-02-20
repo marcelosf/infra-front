@@ -15,7 +15,7 @@
 
             </span>
 
-            <v-form v-model="rules.valid">
+            <v-form ref="form" v-model="rules.valid">
 
                 <v-select
                         label="Responsavel"
@@ -121,7 +121,7 @@
 
         updateLocaleData (data) {
 
-          this.service.local_id = data.room;
+          this.service.locale_id = data.room;
 
         },
 
@@ -129,11 +129,13 @@
 
           MaintenanceResource.storeService(this.service, (response) => {
 
-            this.showMessage('Serviço criado com sucesso');
+            this.showMessage(response.message);
+
+            this.clearForm();
 
           }, () => {
 
-            this.showMessage('An Error occurred and we can not to complete your service order');
+            this.showMessage('An Error occurred and we can not complete your service order');
 
           });
 
@@ -152,6 +154,12 @@
           let answerable = this.service.answerable_id;
 
           return (answerable && answerable.length > 0) || 'Please, select an option';
+
+        },
+
+        clearForm () {
+
+          this.$refs.form.reset();
 
         }
 
