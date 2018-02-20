@@ -6,7 +6,7 @@
 
             <v-flex xs12 sm6 md3 lg3 xl2 v-for="(card, i) in cards" :key="i">
 
-                <v-card hover height="200px">
+                <v-card hover height="200px" :to="{name: card.list}">
 
                     <v-card-media :src="card.media" height="150px">
 
@@ -16,19 +16,31 @@
 
                     <v-card-actions>
 
-                        <v-spacer></v-spacer>
+                        <v-tooltip bottom v-if="card.add">
 
-                        <v-btn v-if="card.add" icon :to="{name: card.add}">
+                            <v-btn  icon slot="activator" :to="{name: card.add}">
 
-                            <v-icon>add</v-icon>
+                                <v-icon>add</v-icon>
 
-                        </v-btn>
+                            </v-btn>
 
-                        <v-btn v-if="card.list" icon :to="{name: card.list}">
+                            <span>{{card.add_text}}</span>
 
-                            <v-icon>list</v-icon>
+                        </v-tooltip>
 
-                        </v-btn>
+                        <v-tooltip bottom v-if="card.list">
+
+                            <v-btn  icon slot="activator" :to="{name: card.list}">
+
+                                <v-icon>list</v-icon>
+
+                            </v-btn>
+
+                            <span>{{card.list_text}}</span>
+
+                        </v-tooltip>
+
+
 
                     </v-card-actions>
 

@@ -30,7 +30,9 @@
               media: 'https://cdn.evbuc.com/eventlogos/110429189/facilitiesmanagement2.jpg',
               link: 'maintenance.service',
               add: 'maintenance.service.create',
-              list: 'maintenance.service'
+              list: 'maintenance.service',
+              add_text: 'Add new Service',
+              list_text: 'List Services'
             },
             {title: 'Patrimônio', media: '', link: ''},
             {title: 'Plotagem', media: '', link: ''},
