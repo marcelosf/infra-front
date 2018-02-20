@@ -4,6 +4,8 @@ export default {
 
     id: null,
 
+    code: '',
+
     created_at: '',
 
     updated_at: '',
