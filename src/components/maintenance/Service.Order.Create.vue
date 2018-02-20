@@ -23,6 +23,19 @@
                         <v-flex xs12 sm12 md12>
 
                             <v-text-field
+                                    v-model="order.description"
+                                    label="Description"
+                                    name="description"
+                                    multi-line
+                                    clearable
+                            >
+                            </v-text-field>
+
+                        </v-flex>
+
+                        <v-flex xs12 sm12 md12>
+
+                            <v-text-field
                                     v-model="order.observation"
                                     label="Observation"
                                     name="observation"
@@ -75,7 +88,14 @@
 
                         <v-flex xs12 sm6 md6 lg6>
 
-                            <v-text-field label="Technical Area"></v-text-field>
+                            <v-select
+                                v-bind:items="technicalItems"
+                                item-value="id"
+                                item-text="name"
+                                v-model="order.technical_id"
+                                label="Technical Area"
+                            >
+                            </v-select>
 
                         </v-flex>
 
@@ -149,6 +169,8 @@
 
           techniciansItems: [],
 
+          technicalItems: [],
+
           order: Order.order
 
         }
@@ -159,9 +181,23 @@
 
         value (value) {
 
-          if (value) this._clearForm();
+          if (value) {
+
+            this._clearForm();
+
+            this._setDefaultDescription();
+
+          }
 
           this.dialog = value;
+
+        },
+
+        order () {
+
+          console.log('order');
+
+          this._setDefaultDescription();
 
         }
 
@@ -183,7 +219,7 @@
 
           this.$set(this.order, 'service_id', this._getService().id);
 
-          console.log(this.order);
+          this._storeOrder();
 
           this.closeDialog();
 
@@ -223,9 +259,37 @@
 
         },
 
+        _loadTechnicalItems () {
+
+          MaintenanceResource.listTechnicalAreas((technicalAreas) => {
+
+            this.technicalItems = technicalAreas;
+
+            console.log(technicalAreas);
+
+          });
+
+        },
+
         _getService () {
 
           return this.$store.state.service.service;
+
+        },
+
+        _storeOrder () {
+
+            MaintenanceResource.storeOrder(this.order, (response) => {
+
+              console.log(response.message);
+
+            });
+
+        },
+
+        _setDefaultDescription () {
+
+          this.$set(this.order, 'description', this._getService().description)
 
         },
 
@@ -234,6 +298,8 @@
           this._loadTechnicians();
 
           this._loadEpiItems();
+
+          this._loadTechnicalItems();
 
         }
 
