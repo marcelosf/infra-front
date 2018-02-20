@@ -12,7 +12,7 @@ export default {
 
     answerable_id: '',
 
-    local_id: ''
+    locale_id: ''
 
   },
 
