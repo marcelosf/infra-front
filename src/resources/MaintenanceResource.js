@@ -4,15 +4,20 @@ const CREATE_SERVICE_URL = 'maintenance/service/service';
 const LIST_SERVICES_URL = 'maintenance/service/service';
 const LIST_ORDERS_BY_SERVICE_URL = 'maintenance/order/list-by-service/';
 const UPDATE_SERVICES_URL = 'maintenance/service/service/';
-const UPDATE_ORDER_URL = 'maintenance/order/order/';
+const ORDER_URL = 'maintenance/order/order/';
 const LIST_EPIS_URL = 'maintenance/epi/epi';
 const ORDER_REPORTS_URL = 'maintenance/order/reports';
+const LIST_TECHNICAL_AREA_URL = 'maintenance/technical/technical';
 
 export class MaintenanceResource extends Resource {
 
   static storeService (data, action, errors) {
 
-    this._getApi().post(CREATE_SERVICE_URL, data).then(action).catch(errors);
+    this._getApi().post(CREATE_SERVICE_URL, data).then((response) => {
+
+      action(response.data);
+
+    }).catch(errors);
 
   }
 
@@ -48,7 +53,7 @@ export class MaintenanceResource extends Resource {
 
   static updateOrder (order, action, errors) {
 
-    this._getApi().put((UPDATE_ORDER_URL + order.id), order).then((response) => {
+    this._getApi().put((ORDER_URL + order.id), order).then((response) => {
 
       action(response.data);
 
@@ -76,6 +81,16 @@ export class MaintenanceResource extends Resource {
 
   }
 
+  static storeOrder (order, action, error) {
+
+    this._getApi().post(ORDER_URL, order).then((response) => {
+
+      action(response.data);
+
+    }).catch(error);
+
+  }
+
   static storeOrderReport (report, action, errors) {
 
     this._getApi().post(ORDER_REPORTS_URL, report).then((response) => {
@@ -83,6 +98,16 @@ export class MaintenanceResource extends Resource {
       action(response.data);
 
     }).catch(errors);
+
+  }
+
+  static listTechnicalAreas (actions) {
+
+    this._getApi().get(LIST_TECHNICAL_AREA_URL).then((response) => {
+
+      actions(response.data.data);
+
+    });
 
   }
 
