@@ -42,7 +42,7 @@
 
                         <v-tabs-item :href="'#service'">Service</v-tabs-item>
 
-                        <v-tabs-item :href="'#orders'" v-if="hasOrders">Orders</v-tabs-item>
+                        <v-tabs-item :href="'#orders'">Orders</v-tabs-item>
 
                     </v-tabs-bar>
 
@@ -54,7 +54,7 @@
 
                         </v-tabs-content>
 
-                        <v-tabs-content :id="'orders'" v-if="hasOrders">
+                        <v-tabs-content :id="'orders'">
 
                             <orders v-model="order" @updated="_updateOrder">
 

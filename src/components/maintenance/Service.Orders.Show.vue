@@ -10,7 +10,9 @@
 
                     <v-card-title primary-title>
 
-                        <div class="title">Observation</div>
+                        <div v-if="hasOrder" class="title">Observation</div>
+
+                        <div v-if="!hasOrder" class="title">No Order Found</div>
 
                         <v-spacer></v-spacer>
 
@@ -46,139 +48,148 @@
 
             </v-flex>
 
-            <v-flex xs12 sm4 md4 lg4>
-
-                <v-card flat>
-
-                    <v-card-text>
-
-                        <date-picker label="Start date" v-model="start_date">
-                        </date-picker>
-
-                    </v-card-text>
-
-                </v-card>
-
-            </v-flex>
-
-            <v-flex xs12 sm4 md4 lg4>
-
-                <v-card flat>
-
-                    <v-card-text>
-
-                        <date-picker label="End date" v-model="end_date">
-                        </date-picker>
-
-                    </v-card-text>
-
-                </v-card>
-
-            </v-flex>
-
-            <v-flex xs12 sm4 md4 lg4>
-
-                <v-card flat>
-
-                    <v-card-text>
-
-                        <v-select
-                                label="Status"
-                                v-bind:items="statusItems"
-                                item-value="status"
-                                item-text="text"
-                                v-model="status"
-                        >
-                        </v-select>
-
-                    </v-card-text>
-
-                </v-card>
-
-            </v-flex>
-
-            <v-flex xs12 sm12 md12 lg12>
-
-                <v-card flat>
-
-                    <v-card-text>
-
-                        <v-select
-                                v-bind:items="techniciansItems"
-                                item-value="id"
-                                item-text="name"
-                                v-model="technicians"
-                                label="Technicians"
-                                multiple
-                                chips
-                        >
-                        </v-select>
-
-                    </v-card-text>
-
-                </v-card>
-
-            </v-flex>
-
-            <v-flex xs12 sm4 md4 lg4>
-
-                <v-card flat color="grey lighten-4">
-
-                    <v-card-title primary-title>
-
-                        <div class="title">Technical Area</div>
-
-                    </v-card-title>
-
-                    <v-card-text>
-
-                        <blockquote class="blockquote">
-
-                            {{ order ? order.technical.name : null }}
-
-                        </blockquote>
-
-                    </v-card-text>
-
-                </v-card>
-
-            </v-flex>
-
-            <v-flex>
-
-                <v-card flat>
-
-                    <v-card-title>
-
-                        <div class="title">EPIs</div>
-
-                    </v-card-title>
-
-                    <v-card-text>
-
-                        <epis v-model="order" :items="epiItems" @updated="_emitOrder">
-
-                        </epis>
-
-                    </v-card-text>
-
-                </v-card>
-
-            </v-flex>
-
-            <v-dialog v-model="dialog" fullscreen :transition="transition" :overlay="false" scrollable>
-
-                <reports v-model="dialog" :order="order" v-show="reportIsSelected">
-
-                </reports>
-
-                <new-order v-model="dialog" v-show="newOrderIsSelected">
-
-                </new-order>
-
-            </v-dialog>
-
         </v-layout>
+
+        <div v-show="hasOrder">
+
+            <v-layout row wrap>
+
+                <v-flex xs12 sm4 md4 lg4>
+
+                    <v-card flat>
+
+                        <v-card-text>
+
+                            <date-picker label="Start date" v-model="start_date">
+                            </date-picker>
+
+                        </v-card-text>
+
+                    </v-card>
+
+                </v-flex>
+
+                <v-flex xs12 sm4 md4 lg4>
+
+                    <v-card flat>
+
+                        <v-card-text>
+
+                            <date-picker label="End date" v-model="end_date">
+                            </date-picker>
+
+                        </v-card-text>
+
+                    </v-card>
+
+                </v-flex>
+
+                <v-flex xs12 sm4 md4 lg4>
+
+                    <v-card flat>
+
+                        <v-card-text>
+
+                            <v-select
+                                    label="Status"
+                                    v-bind:items="statusItems"
+                                    item-value="status"
+                                    item-text="text"
+                                    v-model="status"
+                            >
+                            </v-select>
+
+                        </v-card-text>
+
+                    </v-card>
+
+                </v-flex>
+
+                <v-flex xs12 sm12 md12 lg12>
+
+                    <v-card flat>
+
+                        <v-card-text>
+
+                            <v-select
+                                    v-bind:items="techniciansItems"
+                                    item-value="id"
+                                    item-text="name"
+                                    v-model="technicians"
+                                    label="Technicians"
+                                    multiple
+                                    chips
+                            >
+                            </v-select>
+
+                        </v-card-text>
+
+                    </v-card>
+
+                </v-flex>
+
+                <v-flex xs12 sm4 md4 lg4>
+
+                    <v-card flat color="grey lighten-4">
+
+                        <v-card-title primary-title>
+
+                            <div class="title">Technical Area</div>
+
+                        </v-card-title>
+
+                        <v-card-text>
+
+                            <blockquote class="blockquote">
+
+                                {{ order ? order.technical.name : null }}
+
+                            </blockquote>
+
+                        </v-card-text>
+
+                    </v-card>
+
+                </v-flex>
+
+                <v-flex>
+
+                    <v-card flat>
+
+                        <v-card-title>
+
+                            <div class="title">EPIs</div>
+
+                        </v-card-title>
+
+                        <v-card-text>
+
+                            <epis v-model="order" :items="epiItems" @updated="_emitOrder">
+
+                            </epis>
+
+                        </v-card-text>
+
+                    </v-card>
+
+                </v-flex>
+
+                <v-dialog v-model="dialog" fullscreen :transition="transition" :overlay="false" scrollable>
+
+                    <reports v-model="dialog" :order="order" v-show="reportIsSelected">
+
+                    </reports>
+
+                    <new-order v-model="dialog" v-show="newOrderIsSelected">
+
+                    </new-order>
+
+                </v-dialog>
+
+
+            </v-layout>
+
+        </div>
 
     </div>
 
@@ -367,6 +378,12 @@
       newOrderIsSelected () {
 
         return this.dialogSelector === NEW_ORDER_SELECTOR;
+
+      },
+
+      hasOrder () {
+
+        return !!this.order;
 
       }
 
