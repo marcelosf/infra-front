@@ -17,15 +17,32 @@
 
             <v-layout row>
 
-                <v-flex xs12 sm6 offset-sm6>
+                <v-flex xs9 sm3 md3 lg3>
+
+                    <v-select
+                            label="Search Type"
+                            v-bind:items="searchType"
+                            v-model="search.parameter"
+                    ></v-select>
+
+                </v-flex>
+
+                <v-flex xs9 sm6 md6 lg6>
 
                     <v-text-field
-                            append-icon="search"
                             label="Search"
-                            single-line
-                            hide-details
-                            v-model="search"
+                            v-model="search.value"
                     ></v-text-field>
+
+                </v-flex>
+
+                <v-flex xs3 sm3 md3 lg3>
+
+                    <v-btn color="primary" @click="getSearchResponse">
+
+                        <v-icon>search</v-icon>
+
+                    </v-btn>
 
                 </v-flex>
 
@@ -40,7 +57,6 @@
             <v-data-table v-bind:headers="headers"
                           v-bind:items="items"
                           v-bind:total-items="totalItems"
-                          v-bind:search="search"
                           v-bind:pagination.sync="pagination"
                           hide-actions
             >
@@ -66,7 +82,11 @@
 
             <div class="text-xs-center pt-2">
 
-                <v-pagination :length="pages" v-model="pagination.page" circle>
+                <v-pagination :length="pages"
+                              v-model="pagination.page"
+                              circle
+                              v-bind:total-visible="10"
+                >
                 </v-pagination>
 
             </div>
@@ -87,7 +107,23 @@
 
       return {
 
-        search: '',
+        search: {
+
+          parameter: '',
+
+          value: ''
+
+        },
+
+        searchParameters: null,
+
+        searchType: [
+          {value: 'code', text: 'Code'},
+          {value: 'created_at', text: 'Created At'},
+          {value: 'requester', text: 'Requester'},
+          {value: 'status', text: 'Status'}
+
+        ],
 
         headers: [
           {text: 'Code', value: 'code', align: 'left'},
@@ -98,8 +134,6 @@
         ],
 
         items: [],
-
-        bck: [],
 
         loading: true,
 
@@ -133,6 +167,18 @@
 
         deep: true
 
+      },
+
+      search: {
+
+        handler (value, oldValue) {
+
+          this.searchParameters = value;
+
+        },
+
+        deep: true
+
       }
 
     },
@@ -159,7 +205,21 @@
 
           actions(response);
 
-        }, page);
+        }, page, this.searchParameters);
+
+      },
+
+      getSearchResponse () {
+
+        this.loadServices((services) => {
+
+          this.items = services.services.data;
+
+          this.totalItems = services.services.meta.pagination.total;
+
+          this.setPagination(services);
+
+        }, this.pagination.page, this.searchParameters);
 
       },
 

@@ -31,9 +31,11 @@ export class MaintenanceResource extends Resource {
 
   }
 
-  static paginateServices (action, page, errors) {
+  static paginateServices (action, page, search, errors) {
 
-    this._getApi().get(LIST_SERVICES_URL + '?page=' + page).then((response) => {
+    let searchParam = search ? '&search=' + search.parameter + ':' + search.value : '';
+
+    this._getApi().get(LIST_SERVICES_URL + '?page=' + page + searchParam).then((response) => {
 
       action(response.data);
 
