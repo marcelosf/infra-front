@@ -25,7 +25,17 @@ export class MaintenanceResource extends Resource {
 
     this._getApi().get(LIST_SERVICES_URL).then((response) => {
 
-      action(response.data.data);
+      action(response.data);
+
+    }).catch(errors);
+
+  }
+
+  static paginateServices (action, page, errors) {
+
+    this._getApi().get(LIST_SERVICES_URL + '?page=' + page).then((response) => {
+
+      action(response.data);
 
     }).catch(errors);
 

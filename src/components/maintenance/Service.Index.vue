@@ -9,7 +9,7 @@
                 <v-btn flat class="hidden-xs-only" :to="{name: 'maintenance.service.create'}">
 
                     <v-icon>add</v-icon>
-                    New
+                    New Service
 
                 </v-btn>
 
@@ -37,7 +37,13 @@
 
             </v-btn>
 
-            <v-data-table v-bind:headers="headers" v-bind:items="items" v-bind:search="search">
+            <v-data-table v-bind:headers="headers"
+                          v-bind:items="items"
+                          v-bind:total-items="totalItems"
+                          v-bind:search="search"
+                          v-bind:pagination.sync="pagination"
+                          hide-actions
+            >
 
                 <template slot="items" slot-scope="props">
 
@@ -58,6 +64,13 @@
 
             </v-data-table>
 
+            <div class="text-xs-center pt-2">
+
+                <v-pagination :length="pages" v-model="pagination.page" circle>
+                </v-pagination>
+
+            </div>
+
         </workspace-card>
 
     </v-container>
@@ -69,20 +82,6 @@
   import {MaintenanceResource} from '@/resources/MaintenanceResource';
 
   export default {
-
-    created () {
-
-      MaintenanceResource.listServices((services) => {
-
-        this.items = services;
-
-      }, (errors) => {
-
-        console.log(errors);
-
-      })
-
-    },
 
     data () {
 
@@ -96,10 +95,43 @@
           {text: 'Requester', value: 'requester_id', align: 'left'},
           {text: 'Status', value: 'status', align: 'left'},
           {text: 'Actions', value: null, align: 'left'}
-
         ],
 
-        items: []
+        items: [],
+
+        bck: [],
+
+        loading: true,
+
+        pagination: {},
+
+        totalItems: 0,
+
+        pages: 0
+
+      }
+
+    },
+
+    watch: {
+
+      pagination: {
+
+        handler () {
+
+          this.loadServices((services) => {
+
+            this.items = services.services.data;
+
+            this.totalItems = services.services.meta.pagination.total;
+
+            this.setPagination(services);
+
+          }, this.pagination.page);
+
+        },
+
+        deep: true
 
       }
 
@@ -118,6 +150,24 @@
           params: { service: item.id }
 
         });
+
+      },
+
+      loadServices (actions, page) {
+
+        MaintenanceResource.paginateServices((response) => {
+
+          actions(response);
+
+        }, page);
+
+      },
+
+      setPagination (services) {
+
+        this.pages = services.services.meta.pagination.total_pages;
+
+        this.pagination.rowsPerPage = services.services.meta.pagination.per_page;
 
       }
 
