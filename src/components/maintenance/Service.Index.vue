@@ -1,6 +1,6 @@
 <template>
 
-    <v-container fluid>
+    <v-container grid-list-md>
 
         <workspace-card title="Services">
 

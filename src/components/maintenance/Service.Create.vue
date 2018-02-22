@@ -1,17 +1,31 @@
 <template>
 
-    <v-container fluid>
+    <v-container grid-list-md>
 
         <workspace-card title="Novo Serviço">
 
             <span slot="menu">
 
-                <v-btn flat :to="{name: 'maintenance.service'}">
+                <span class="hidden-xs-only">
 
-                    <v-icon>list</v-icon>
-                    List
+                    <v-btn flat :to="{name: 'maintenance.service'}">
 
-                </v-btn>
+                        <v-icon>list</v-icon>
+                        List
+
+                    </v-btn>
+
+                </span>
+
+                <span class="hidden-sm-and-up">
+
+                    <v-btn icon :to="{name: 'maintenance.service'}">
+
+                        <v-icon>list</v-icon>
+
+                    </v-btn>
+
+                </span>
 
             </span>
 

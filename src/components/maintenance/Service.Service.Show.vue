@@ -88,7 +88,8 @@
             {value: 'executed', text: 'Executed'},
             {value: 'canceled', text: 'Canceled'},
             {value: 'waiting_information', text: 'Waiting for information'},
-            {value: 'waiting_gear', text: 'Waiting for Gear'}
+            {value: 'waiting_gear', text: 'Waiting for Gear'},
+            {value: 'open', text: 'Open'}
 
           ],
 

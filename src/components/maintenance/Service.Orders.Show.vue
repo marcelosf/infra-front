@@ -16,21 +16,41 @@
 
                         <v-spacer></v-spacer>
 
-                        <v-btn flat color="primary" @click.stop="openReportDialog">
+                        <span class="hidden-xs-only">
 
-                            Reports
+                            <v-btn flat color="primary" @click.stop="openReportDialog">
 
-                            <v-icon right>assignment</v-icon>
+                                Reports
 
-                        </v-btn>
+                                <v-icon right>assignment</v-icon>
 
-                        <v-btn flat color="primary" @click.stop="openNewOrderDialog">
+                            </v-btn>
 
-                            New Order
+                            <v-btn flat color="primary" @click.stop="openNewOrderDialog">
 
-                            <v-icon right>add</v-icon>
+                                New Order
 
-                        </v-btn>
+                                <v-icon right>add</v-icon>
+
+                            </v-btn>
+
+                        </span>
+
+                        <span class="hidden-sm-and-up">
+
+                            <v-btn icon primary @click.stop="openReportDialog">
+
+                                <v-icon>assignment</v-icon>
+
+                            </v-btn>
+
+                            <v-btn icon primary @click.stop="openNewOrderDialog">
+
+                                <v-icon>add</v-icon>
+
+                            </v-btn>
+
+                        </span>
 
                     </v-card-title>
 

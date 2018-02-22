@@ -56,6 +56,42 @@ export default {
 
     valid: false
 
+  },
+
+  transformEpis (order) {
+
+    let transformed = order;
+
+    transformed.epis.forEach((epi, index, epis) => {
+
+      if (epi.id) {
+
+        epis[index] = epi.id;
+
+      }
+
+    });
+
+    return transformed;
+
+  },
+
+  transformTechnicians (order) {
+
+    let transformed = order;
+
+    transformed.technicians.forEach((technician, index, technicians) => {
+
+      if (technician.id) {
+
+        technicians[index] = technician.id;
+
+      }
+
+    });
+
+    return transformed;
+
   }
 
 }

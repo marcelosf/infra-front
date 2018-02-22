@@ -1,6 +1,6 @@
 <template>
 
-    <v-container>
+    <v-container grid-list-md>
 
         <workspace-card :title="title | capitalize ">
 
@@ -18,19 +18,39 @@
 
                 <span slot="menu">
 
-                    <v-btn flat :to="{name: 'maintenance.service'}">
+                    <span class="hidden-xs-only">
 
-                        <v-icon>list</v-icon>
-                        List
+                        <v-btn flat :to="{name: 'maintenance.service'}">
 
-                    </v-btn>
+                            <v-icon>list</v-icon>
+                            List
 
-                    <v-btn flat :to="{name: 'maintenance.service.create'}">
+                        </v-btn>
 
-                        <v-icon>add</v-icon>
-                        New Service
+                        <v-btn flat :to="{name: 'maintenance.service.create'}">
 
-                    </v-btn>
+                            <v-icon>add</v-icon>
+                            New Service
+
+                        </v-btn>
+
+                    </span>
+
+                    <span class="hidden-sm-and-up">
+
+                        <v-btn icon :to="{name: 'maintenance.service'}">
+
+                            <v-icon>list</v-icon>
+
+                        </v-btn>
+
+                        <v-btn icon :to="{name: 'maintenance.service.create'}">
+
+                            <v-icon>add</v-icon>
+
+                        </v-btn>
+
+                    </span>
 
                 </span>
 
@@ -126,17 +146,13 @@
 
           title () {
 
-            let title = 'Service ' + this.$store.state.service.service.code;
-
             if (this.selectedTab === 'service') {
 
-              return title;
+              return 'Service ' + this.$store.state.service.service.code;
 
             }
 
-            title = title + ' Order';
-
-            return title;
+            return 'Order';
 
           },
 
@@ -218,7 +234,13 @@
 
           _updateOrder () {
 
-            MaintenanceResource.updateOrder(this.order, (response) => {
+            let order = Order.transformEpis(this.order);
+
+            order = Order.transformTechnicians(order);
+
+            console.log(order);
+
+            MaintenanceResource.updateOrder(order, (response) => {
 
               this._sendMessage(response.message);
 
