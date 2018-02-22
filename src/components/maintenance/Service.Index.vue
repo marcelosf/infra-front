@@ -15,38 +15,74 @@
 
             </span>
 
-            <v-layout row>
+            <v-layout row wrap>
 
-                <v-flex xs9 sm3 md3 lg3>
+                <v-spacer></v-spacer>
 
-                    <v-select
-                            label="Search Type"
-                            v-bind:items="searchType"
-                            v-model="search.parameter"
-                    ></v-select>
+                <v-btn icon @click.native="toggleSearch">
 
-                </v-flex>
+                    <v-icon>search</v-icon>
 
-                <v-flex xs9 sm6 md6 lg6>
-
-                    <v-text-field
-                            label="Search"
-                            v-model="search.value"
-                    ></v-text-field>
-
-                </v-flex>
-
-                <v-flex xs3 sm3 md3 lg3>
-
-                    <v-btn color="primary" @click="getSearchResponse">
-
-                        <v-icon>search</v-icon>
-
-                    </v-btn>
-
-                </v-flex>
+                </v-btn>
 
             </v-layout>
+
+            <v-form ref="form">
+
+                <v-slide-y-transition>
+
+                    <v-layout row wrap v-show="showSearch">
+
+                        <v-spacer></v-spacer>
+
+                        <v-flex xs12 sm3 md3 lg3>
+
+                            <v-select
+                                    label="Search Type"
+                                    v-bind:items="searchType"
+                                    v-model="search.parameter"
+                            ></v-select>
+
+                        </v-flex>
+
+                        <v-flex xs12 sm5 md5 lg5>
+
+                            <v-text-field
+                                    label="Search"
+                                    v-model="search.value"
+                            ></v-text-field>
+
+                        </v-flex>
+
+                        <v-flex xs6 sm2 md2 lg2 class="text-xs-right">
+
+                            <v-btn color="primary" @click="getSearchResponse">
+
+                                <v-icon>search</v-icon>
+                                Search
+
+                            </v-btn>
+
+                        </v-flex>
+
+                        <v-flex xs6 sm2 md2 lg2 class="text-xs-right">
+
+                            <v-btn @click="clearForm">
+
+                                <v-icon>clear</v-icon>
+                                Clear
+
+                            </v-btn>
+
+                        </v-flex>
+
+                    </v-layout>
+
+                </v-slide-y-transition>
+
+            </v-form>
+
+
 
             <v-btn class="hidden-sm-and-up primary" fab fixed bottom right :to="{name: 'maintenance.service.create'}">
 
@@ -114,6 +150,8 @@
           value: ''
 
         },
+
+        showSearch: false,
 
         searchParameters: null,
 
@@ -223,11 +261,23 @@
 
       },
 
+      clearForm () {
+
+        this.$refs.form.reset();
+
+      },
+
       setPagination (services) {
 
         this.pages = services.services.meta.pagination.total_pages;
 
         this.pagination.rowsPerPage = services.services.meta.pagination.per_page;
+
+      },
+
+      toggleSearch () {
+
+        this.showSearch = !this.showSearch;
 
       }
 
