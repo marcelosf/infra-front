@@ -99,17 +99,13 @@
 
                 <template slot="items" slot-scope="props">
 
-                    <tr>
+                    <tr @click="triggerActions(props.item)">
 
                         <td class="text-xs-left">{{ props.item.code }}</td>
                         <td class="text-xs-left">{{ props.item.created_at }}</td>
                         <td class="text-xs-left">{{ props.item.requester }}</td>
                         <td class="text-xs-left">{{ props.item.status }}</td>
-                        <td>
-                            <v-btn icon @click="triggerActions(props.item)">
-                                <v-icon>more_vert</v-icon>
-                            </v-btn>
-                        </td>
+
                     </tr>
 
                 </template>
@@ -167,8 +163,7 @@
           {text: 'Code', value: 'code', align: 'left'},
           {text: 'Created', value: 'created_at', align: 'left'},
           {text: 'Requester', value: 'requester_id', align: 'left'},
-          {text: 'Status', value: 'status', align: 'left'},
-          {text: 'Actions', value: null, align: 'left'}
+          {text: 'Status', value: 'status', align: 'left'}
         ],
 
         items: [],
