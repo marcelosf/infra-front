@@ -210,6 +210,10 @@
 
         </div>
 
+        <messages :message="snackbar.message" v-model="snackbar.toggle">
+
+        </messages>
+
     </div>
 
 </template>
@@ -221,6 +225,7 @@
   import Reports from './Service.Order.Reports';
   import OderCreate from './Service.Order.Create';
   import {MaintenanceResource} from '@/resources/MaintenanceResource';
+  import SnackBar from '@/layouts/SnackBar';
 
   const REPORT_SELECTOR = 'report';
   const NEW_ORDER_SELECTOR = 'newOrder';
@@ -260,7 +265,15 @@
 
         dialogSelector: null,
 
-        transition: 'dialog-bottom-transition'
+        transition: 'dialog-bottom-transition',
+
+        snackbar: {
+
+          message: '',
+
+          toggle: false
+
+        }
 
       }
 
@@ -470,7 +483,15 @@
 
       showCreatedOrderMessage (response) {
 
-        console.log(response);
+        this.showMessages(response.message);
+
+      },
+
+      showMessages (message) {
+
+        this.snackbar.message = message;
+
+        this.snackbar.toggle = true;
 
       }
 
@@ -481,7 +502,8 @@
       'date-picker': DatePicker,
       'epis': Epis,
       'reports': Reports,
-      'new-order': OderCreate
+      'new-order': OderCreate,
+      'messages': SnackBar
 
     }
 
