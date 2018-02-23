@@ -144,8 +144,6 @@
 
         MaintenanceResource.updateService(service, (response) => {
 
-          console.log(response);
-
           this._sendMessage(response.message);
 
         }, (errors) => {

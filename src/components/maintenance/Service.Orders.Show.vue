@@ -38,13 +38,13 @@
 
                         <span class="hidden-sm-and-up">
 
-                            <v-btn icon primary @click.stop="openReportDialog">
+                            <v-btn icon color="primary" @click.stop="openReportDialog">
 
                                 <v-icon>assignment</v-icon>
 
                             </v-btn>
 
-                            <v-btn icon primary @click.stop="openNewOrderDialog">
+                            <v-btn icon color="primary" @click.stop="openNewOrderDialog">
 
                                 <v-icon>add</v-icon>
 
@@ -200,12 +200,11 @@
 
                     </reports>
 
-                    <new-order v-model="dialog" v-show="newOrderIsSelected">
+                    <new-order v-model="dialog" v-show="newOrderIsSelected" @created="showCreatedOrderMessage">
 
                     </new-order>
 
                 </v-dialog>
-
 
             </v-layout>
 
@@ -466,6 +465,12 @@
         this.dialogSelector = NEW_ORDER_SELECTOR;
 
         this.dialog = true;
+
+      },
+
+      showCreatedOrderMessage (response) {
+
+        console.log(response);
 
       }
 

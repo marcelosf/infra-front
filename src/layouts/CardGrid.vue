@@ -40,8 +40,6 @@
 
                         </v-tooltip>
 
-
-
                     </v-card-actions>
 
                 </v-card>

@@ -195,8 +195,6 @@
 
         order () {
 
-          console.log('order');
-
           this._setDefaultDescription();
 
         }
@@ -265,8 +263,6 @@
 
             this.technicalItems = technicalAreas;
 
-            console.log(technicalAreas);
-
           });
 
         },
@@ -281,7 +277,9 @@
 
             MaintenanceResource.storeOrder(this.order, (response) => {
 
-              console.log(response.message);
+              this.reloadOrdersList();
+
+              this.dispatchOrderCreated(response);
 
             });
 
@@ -290,6 +288,22 @@
         _setDefaultDescription () {
 
           this.$set(this.order, 'description', this._getService().description)
+
+        },
+
+        dispatchOrderCreated (response) {
+
+          this.$emit('created', response);
+
+        },
+
+        reloadOrdersList () {
+
+          MaintenanceResource.listOrdersByService(this._getService().id, (orders) => {
+
+            this.$store.state.order.orders = orders;
+
+          });
 
         },
 
