@@ -238,8 +238,6 @@
 
             order = Order.transformTechnicians(order);
 
-            console.log(order);
-
             MaintenanceResource.updateOrder(order, (response) => {
 
               this._sendMessage(response.message);
