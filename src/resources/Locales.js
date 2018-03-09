@@ -1,4 +1,4 @@
-const LOCALE_ENDPOINT = 'locale/locale';
+const LOCALE_ENDPOINT = 'locale';
 
 import {Api} from '@/resources/Api/Api';
 

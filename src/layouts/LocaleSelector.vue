@@ -1,6 +1,6 @@
 <template>
 
-    <v-form v-model="valid">
+    <v-form ref="form">
 
         <v-container grid-list-lg>
 
@@ -11,9 +11,8 @@
                     <v-select
                             label="Bloco"
                             v-bind:items="locales"
-                            :rules="buildRule"
                             item-text="build"
-                            item-value="id"
+                            item-value="build"
                             v-model="build"
                             persistent-hint
                             autocomplete
@@ -27,9 +26,8 @@
                     <v-select
                             label="Andar"
                             v-bind:items="floorItems"
-                            :rules="floorRule"
                             item-text="floor"
-                            item-value="id"
+                            item-value="floor"
                             v-model="floor"
                             persistent-hint
                             autocomplete
@@ -43,9 +41,8 @@
                     <v-select
                             label="Sala"
                             v-bind:items="localeItems"
-                            :rules="roomRule"
-                            item-text="name"
-                            item-value="id"
+                            item-text="local"
+                            item-value="local"
                             v-model="room"
                             persistent-hint
                             autocomplete
@@ -58,9 +55,7 @@
 
         </v-container>
 
-
     </v-form>
-
 
 </template>
 
@@ -86,6 +81,8 @@
 
         locales: [],
 
+        filteredList: [],
+
         build: '',
 
         buildRule: [(value) => !!value || 'Please, select an option.'],
@@ -108,11 +105,11 @@
 
       floorItems () {
 
-        let build = this.locales[(this.build - 1)];
+        if (this.build) {
 
-        if (build) {
+          let floors = Filter.byParameterKey(this.build, 'build', this.locales);
 
-          let floors = Filter.byParameterKey(build.floor, 'floor', this.locales);
+          this.filteredList = floors;
 
           this.dispatchUpdateEvent();
 
@@ -126,11 +123,9 @@
 
       localeItems () {
 
-        let locale = this.locales[(this.floor - 1)];
+        if (this.floor) {
 
-        if (locale) {
-
-          let locales = Filter.byParameterKey(locale.name, 'name', this.locales);
+          let locales = Filter.byParameterKey(this.floor, 'floor', this.filteredList);
 
           this.dispatchUpdateEvent();
 
@@ -149,6 +144,12 @@
       dispatchUpdateEvent () {
 
         this.$emit('update', {build: this.build, floor: this.floor, room: this.room, valid: this.valid});
+
+      },
+
+      clearForm () {
+
+        this.$refs.form.reset();
 
       }
 

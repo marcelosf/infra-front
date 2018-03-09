@@ -101,7 +101,7 @@
 
         clipped: true,
 
-        drawer: true,
+        drawer: false,
 
         fixed: true,
 
@@ -109,23 +109,11 @@
 
         items: [
 
-            {id: 1, icon: 'account_balance', title: 'Diretoria', link: 'home.directory'},
-            {id: 2, icon: 'school', title: 'Colegiados', link: 'home.collegiate'},
-            {id: 3, icon: 'send', title: 'Comissões', link: 'home.commissions'},
-            {id: 4, icon: 'email', title: 'E-mail', link: 'home.email'},
-            {id: 5, icon: 'computer', title: 'Suporte', link: 'home.support'},
-            {id: 6, icon: 'build', title: 'Serviços', link: 'home.services'},
-            {id: 7, icon: 'book', title: 'Normas', link: 'home.roles'},
-            {id: 8, icon: 'send', title: 'CCE', link: 'home.cce'},
-            {id: 9, icon: 'photo_camera', title: 'Imagens', link: 'home.images'},
-            {id: 10, icon: 'perm_identity', title: 'Comunidade', link: 'home.community'},
-            {id: 11, icon: 'send', title: 'ASIAG', link: 'home.community'}
-
         ],
 
         right: true,
 
-        title: 'Intranet IAG'
+        title: 'Infra IAG'
 
       }
 
