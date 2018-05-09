@@ -36,7 +36,29 @@ export class HomeResource extends Resource {
 
       });
 
+      searchParameters = this.removeLastChar(searchParameters);
+
+      searchParameters = this.setSearchJoin('and', searchKeys, searchParameters);
+
       return searchParameters;
+
+    }
+
+  }
+
+  static removeLastChar (string) {
+
+    let stringLength = string.length;
+
+    return string.substr(0, (stringLength - 1));
+
+  }
+
+  static setSearchJoin (join, search, searchParameters) {
+
+    if (search.length > 0) {
+
+      return searchParameters + '&searchJoin=' + join;
 
     }
 

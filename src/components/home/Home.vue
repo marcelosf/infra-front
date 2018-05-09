@@ -4,22 +4,24 @@
 
         <v-slide-y-transition mode="out-in">
 
-            <v-card>
+            <div>
 
-                <v-layout row wrap>
+                <v-card class="hidden-sm-and-down">
 
-                    <v-spacer></v-spacer>
+                    <v-layout row wrap>
 
-                    <v-btn flat color="primary" @click.native="toggleSearch">
+                        <v-spacer></v-spacer>
 
-                        <v-icon>search</v-icon>
-                        Busca
+                        <v-btn flat color="primary" @click.native="toggleSearch">
 
-                    </v-btn>
+                            <v-icon>search</v-icon>
+                            Busca
 
-                </v-layout>
+                        </v-btn>
 
-                <home-search v-model="toggle" @update="setSearch">
+                    </v-layout>
+
+                    <home-search ref="search" v-model="toggle" @update="setSearch">
 
                     <span slot="actions">
 
@@ -31,59 +33,67 @@
 
                     </span>
 
-                </home-search>
+                    </home-search>
 
-                <v-layout column align-center>
+                    <v-layout column align-center>
 
-                    <v-data-table
-                            v-bind:headers="headers"
-                            v-bind:items="items"
-                            v-bind:total-items="totalItems"
-                            v-bind:pagination.sync="pagination"
-                            hide-actions
-                    >
-                        <template slot="items" slot-scope="props">
+                        <v-data-table
+                                v-bind:headers="headers"
+                                v-bind:items="items"
+                                v-bind:total-items="totalItems"
+                                v-bind:pagination.sync="pagination"
+                                v-bind:loading="loading"
+                                hide-actions
+                        >
+                            <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
 
-                            <td class="text-xs-right">{{ props.item.build }}</td>
-                            <td class="text-xs-right">{{ props.item.floor }}</td>
-                            <td class="text-xs-right">{{ props.item.room }}</td>
-                            <td class="text-xs-right">{{ props.item.patchPort }}</td>
-                            <td class="text-xs-right">{{ props.item.switchHostname }}</td>
-                            <td class="text-xs-right">{{ props.item.switchIP }}</td>
-                            <td class="text-xs-right">{{ props.item.switchIdentification }}</td>
-                            <td class="text-xs-right">{{ props.item.service }}</td>
-                            <td class="text-xs-right">{{ props.item.switchVlan }}</td>
-                            <td class="text-xs-right">{{ props.item.switchPort }}</td>
-                            <td class="text-xs-right">{{ props.item.rackLocation }}</td>
+                            <template slot="items" slot-scope="props">
 
-                        </template>
+                                <td class="text-xs-left">{{ props.item.build }}</td>
+                                <td class="text-xs-left">{{ props.item.floor }}</td>
+                                <td class="text-xs-left">{{ props.item.room }}</td>
+                                <td class="text-xs-left">{{ props.item.patchPort }}</td>
+                                <td class="text-xs-left">{{ props.item.switchHostname }}</td>
+                                <td class="text-xs-left">{{ props.item.switchIP }}</td>
+                                <td class="text-xs-left">{{ props.item.switchIdentification }}</td>
+                                <td class="text-xs-left">{{ props.item.switchVlan }}</td>
+                                <td class="text-xs-left">{{ props.item.switchPort }}</td>
+                                <td class="text-xs-left">{{ props.item.rackLocation }}</td>
 
-                    </v-data-table>
+                            </template>
 
-                    <v-card flat>
+                        </v-data-table>
 
-                        <v-card-text>
+                        <v-card flat>
 
-                            <div class="text-xs-center pt-2">
+                            <v-card-text>
 
-                                <v-pagination
-                                        :length="pages"
-                                        v-model="pagination.page"
-                                        circle
-                                        v-bind:total-visible="10"
-                                >
+                                <div class="text-xs-center pt-2">
 
-                                </v-pagination>
+                                    <v-pagination
+                                            :length="pages"
+                                            v-model="pagination.page"
+                                            circle
+                                            v-bind:total-visible="10"
+                                    >
 
-                            </div>
+                                    </v-pagination>
 
-                        </v-card-text>
+                                </div>
 
-                    </v-card>
+                            </v-card-text>
 
-                </v-layout>
+                        </v-card>
 
-            </v-card>
+                    </v-layout>
+
+                </v-card>
+
+                <home-iterator :data="items" class="hidden-md-and-up">
+
+                </home-iterator>
+
+            </div>
 
         </v-slide-y-transition>
 
@@ -94,6 +104,8 @@
 <script>
   import {HomeResource} from '@/resources/HomeResource';
   import HomeSearch from './Home.Search';
+  import HomeIterator from './Home.Iterator';
+  import {LocalFilter} from '@/filters/LocalFilter';
 
   export default {
 
@@ -104,13 +116,12 @@
         headers: [
 
           {text: 'Bloco', align: 'left', sortable: 'true', value: 'build'},
-          {text: 'Andar', align: 'left', sortable: 'true', value: 'floor'},
+          {text: 'Pavimento', align: 'left', sortable: 'true', value: 'floor'},
           {text: 'Sala', align: 'left', sortable: 'true', value: 'room'},
           {text: 'Ponto', align: 'left', sortable: 'true', value: 'patchPort'},
           {text: 'Hostname', align: 'left', sortable: 'true', value: 'switchHostname'},
           {text: 'IP', align: 'left', sortable: 'true', value: 'switchIP'},
           {text: 'Switch', align: 'left', sortable: 'true', value: 'switchIdentification'},
-          {text: 'Serviço', align: 'left', sortable: 'true', value: 'service'},
           {text: 'VLAN', align: 'left', sortable: 'true', value: 'switchVlan'},
           {text: 'Porta do Switch', align: 'left', sortable: 'true', value: 'switchPort'},
           {text: 'Sala Rack', align: 'left', sortable: 'true', value: 'rackLocation'}
@@ -127,6 +138,8 @@
 
         toggle: false,
 
+        loading: false,
+
         searchParameters: {}
 
       }
@@ -139,9 +152,13 @@
 
         handler () {
 
+          this.showLoader();
+
           this.loadList((response) => {
 
             this.updateList(response);
+
+            this.hideLoader();
 
           }, this.pagination.page, this.searchParameters);
 
@@ -197,6 +214,12 @@
 
       },
 
+      closeDialog () {
+
+        this.$refs.search.closeForm();
+
+      },
+
       updateList (list) {
 
         this.items = list.data;
@@ -205,13 +228,36 @@
 
         this.setPagination(list);
 
+      },
+
+      showLoader () {
+
+        this.loading = true;
+
+      },
+
+      hideLoader () {
+
+        this.loading = false;
+
       }
 
     },
 
     components: {
 
-      'home-search': HomeSearch
+      'home-search': HomeSearch,
+      'home-iterator': HomeIterator
+
+    },
+
+    filters: {
+
+      local (data) {
+
+        return LocalFilter.buildRoomFormat(data);
+
+      }
 
     }
 

@@ -208,7 +208,7 @@
 
           this.search.floor = value.floor;
 
-          this.search.room = value.room;
+          this.search.local = value.room;
 
         },
 

@@ -5,7 +5,7 @@ export const SwitchRouters = [
   {
 
     path: '/switch',
-    name: 'switch',
+    name: 'switch.index',
     component: Switch
 
   }

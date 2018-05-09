@@ -17,7 +17,7 @@ export class Api {
 
     instance.defaults.baseURL = this.baseUrl;
 
-    instance.defaults.timeout = 5000;
+    instance.defaults.timeout = 200000;
 
     return instance;
 

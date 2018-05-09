@@ -8,7 +8,19 @@ import {store} from '@/store/Store';
 import App from './App'
 import router from './router'
 
-Vue.use(Vuetify)
+const THEME = {
+
+  theme: {
+
+    primary: '#00BCD4',
+
+    secondary: '#006064'
+
+  }
+
+};
+
+Vue.use(Vuetify, THEME)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

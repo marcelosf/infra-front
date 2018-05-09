@@ -48,7 +48,7 @@
 
     </v-navigation-drawer>
 
-    <v-toolbar class="light-blue white--text" fixed app :clipped-left="clipped">
+    <v-toolbar class="primary white--text" fixed app :clipped-left="clipped">
 
       <v-toolbar-side-icon class="white--text" @click.stop="drawer = !drawer" light></v-toolbar-side-icon>
 
@@ -108,6 +108,8 @@
         activeItem: false,
 
         items: [
+
+          {id: 1, icon: 'router', title: 'Switches', link: 'switch.index'}
 
         ],
 
