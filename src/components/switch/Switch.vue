@@ -4,6 +4,18 @@
 
         <workspace-card title="Switches">
 
+            <span slot="menu">
+
+                <v-btn flat @click="goToNewSwitch">
+
+                    <v-icon>add</v-icon>
+
+                    Novo Switch
+
+                </v-btn>
+
+            </span>
+
             <v-layout column align-center>
 
                 <v-data-table
@@ -124,15 +136,21 @@
 
           }, page, search);
 
+        },
+
+        setPagination (list) {
+
+          this.pages = list.list.meta.pagination.total_pages;
+
+          this.pagination.rowsPerPage = list.list.meta.pagination.per_page;
+
+        },
+
+        goToNewSwitch () {
+
+          this.$router.push({name: 'switch.new'});
+
         }
-
-      },
-
-      setPagination (list) {
-
-        this.pages = list.list.meta.pagination.total_pages;
-
-        this.pagination.rowsPerPage = list.list.meta.pagination.per_page;
 
       },
 
