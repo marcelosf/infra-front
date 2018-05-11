@@ -32,7 +32,7 @@
                 <v-text-field
                         label="Número de Portas"
                         name="switch-number-of-ports"
-                        v-model="switches.numberOfPorts"
+                        v-model="switches.num_ports"
                         required
                 ></v-text-field>
 
@@ -56,9 +56,9 @@
                         required
                 ></v-text-field>
 
-                <v-btn color="primary">Criar</v-btn>
+                <v-btn color="primary" @click="save">Criar</v-btn>
 
-                <v-btn>Cancelar</v-btn>
+                <v-btn @click="redirectToList">Cancelar</v-btn>
 
             </v-form>
 
@@ -70,6 +70,9 @@
 
 <script>
     import WorkspaceCard from '@/layouts/WorkspaceCard';
+    import {StackResource} from '@/resources/StackResource';
+    import {SwitchResource} from '@/resources/SwitchResource';
+    import {RackResource} from '@/resources/RackResource';
 
     export default {
 
@@ -85,15 +88,91 @@
 
             ip: '',
 
-            numberOfPorts: null,
+            num_ports: null,
 
             brand: 'HP5120-G',
 
             register: '',
 
-            stack: null
+            stack: null,
+
+            stack_id: null
+
+          },
+
+          stack: {
+
+            hostname: '',
+
+            rack_id: null
 
           }
+
+        }
+
+      },
+
+      methods: {
+
+        save () {
+
+          this.getRack((rack) => {
+
+            this.stack.rack_id = rack[0].id;
+
+            this.stack.hostname = this.switches.hostname;
+
+            this.storeStack(this.stack, (stack) => {
+
+                this.switches.stack_id = stack.id;
+
+                this.storeSwitch(this.switches, (switches) => {
+
+                  console.log(switches);
+
+                });
+
+            });
+
+          });
+
+        },
+
+        storeStack (stack, actions) {
+
+          StackResource.store(stack, (response) => {
+
+            actions(response);
+
+          });
+
+        },
+
+        storeSwitch (switches, actions) {
+
+          SwitchResource.store(switches, (response) => {
+
+            actions(response);
+
+          });
+
+        },
+
+        getRack (actions, errors) {
+
+          let rackName = this.switches.hostname.split('_');
+
+          RackResource.list({parameter: 'name', value: rackName[0]}, (rack) => {
+
+            actions(rack);
+
+          }, (errors));
+
+        },
+
+        redirectToList () {
+
+          this.$router.push({name: 'home'});
 
         }
 

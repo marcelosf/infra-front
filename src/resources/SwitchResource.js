@@ -16,4 +16,14 @@ export class SwitchResource extends Resource {
 
   }
 
+  static store (switches, actions, errors) {
+
+    this._getApi().post(SWITCH_API, switches).then((response) => {
+
+      actions(response);
+
+    }).catch(errors);
+
+  }
+
 }
