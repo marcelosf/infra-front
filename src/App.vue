@@ -56,8 +56,6 @@
 
       <v-spacer></v-spacer>
 
-      <account-menu></account-menu>
-
     </v-toolbar>
 
     <v-content>
@@ -91,8 +89,6 @@
 </style>
 
 <script>
-  import AccountMenu from '@/layouts/AccountMenu.vue';
-
   export default {
 
     data () {
@@ -119,12 +115,7 @@
 
       }
 
-    },
-
-    components: {
-
-      'account-menu': AccountMenu
-
     }
+
   }
 </script>

@@ -4,13 +4,13 @@ const SWITCH_API = '/switch';
 
 export class SwitchResource extends Resource {
 
-  static listPatchPanels (action, page, search, errors) {
+  static listSwitches (action, page, search, errors) {
 
-    let searchParam = search ? '&search=' + search.parameter + ':' + search.value : '';
+    let searchParam = this.getRequestParameters(search);
 
     this._getApi().get(SWITCH_API + '?page=' + page + searchParam).then((response) => {
 
-      action(response.data);
+      action(response.data.data);
 
     }).catch(errors);
 

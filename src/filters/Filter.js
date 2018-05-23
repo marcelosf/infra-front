@@ -10,4 +10,34 @@ export class Filter {
 
   }
 
+  static bySettingParameter (parameterValue, parameterToSet, query, array) {
+
+    let newArray = [];
+
+    array.forEach((item) => {
+
+      if (item[query.parameter] === query.value) {
+
+        item[parameterToSet] = parameterValue;
+
+      }
+
+      newArray.push(item);
+
+    });
+
+    return newArray;
+
+  }
+
+  static interactive (array, actions) {
+
+    array.forEach((item) => {
+
+      actions(item);
+
+    });
+
+  }
+
 }

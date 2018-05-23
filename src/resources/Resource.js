@@ -8,4 +8,10 @@ export class Resource {
 
   }
 
+  static getRequestParameters (search) {
+
+    return search ? '&search=' + search.parameter + ':' + search.value : '';
+
+  }
+
 }

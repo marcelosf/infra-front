@@ -10,4 +10,10 @@ export class TextFilters {
 
   }
 
+  static valueOrText (value, text) {
+
+    return value || text;
+
+  }
+
 }
